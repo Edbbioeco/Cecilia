@@ -34,7 +34,7 @@ ggplot() +
 bioclim_presente <- geodata::worldclim_country(country = "BRA",
                                                var = "bio", 
                                                path = getwd(),
-                                               res = 0.5)
+                                               res = 2.5)
 
 ### Visualizando ----
 
@@ -62,43 +62,53 @@ ggplot() +
 
 ### Importando ----
 
-baixar_cenarios_futuros <- function(cenario){
+baixar_cenarios_futuros <- function(tempo){
   
-  raster_futuro <- geodata::cmip6_world(model = "CanESM5", 
-                                        ssp = cenario, 
-                                        time = "2041-2060", 
+  raster_futuro <- geodata::cmip6_world(model = "ACCESS-CM2", 
+                                        ssp = "585", 
+                                        time = tempo, 
                                         var = "bioc", 
-                                        res = 0.5, 
+                                        res = 2.5, 
                                         path = "dados_worldclim")
   
   raster_futuro %<>%
     terra::crop(br) %<>%
     terra::mask(br)
   
-  assign(paste0("bioclim_futuro_", cenario),
+  assign(paste0("bioclim_futuro_", tempo),
          raster_futuro,
          envir = globalenv())
   
 }
 
-cenario <- c("245", "370", "585")
+tempo <- c("2021-2040",
+           "2041-2060",
+           "2061-2080",
+           "2081-2100")
 
-purrr::map(cenario, baixar_cenarios_futuros)
+tempo
+
+purrr::map(tempo, baixar_cenarios_futuros)
 
 ### Visualizando ---- 
 
 ggplot() +
-  tidyterra::geom_spatraster(data = bioclim_futuro_245) +
+  tidyterra::geom_spatraster(data = `bioclim_futuro_2021-2040`) +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
 ggplot() +
-  tidyterra::geom_spatraster(data = bioclim_futuro_370) +
+  tidyterra::geom_spatraster(data = `bioclim_futuro_2041-2060`) +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
 ggplot() +
-  tidyterra::geom_spatraster(data = bioclim_futuro_585) +
+  tidyterra::geom_spatraster(data = `bioclim_futuro_2061-2080`) +
+  scale_fill_viridis_c(na.value = NA) +
+  facet_wrap(~lyr)
+
+ggplot() +
+  tidyterra::geom_spatraster(data = `bioclim_futuro_2081-2100`) +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
@@ -106,12 +116,29 @@ ggplot() +
 
 ## Cenário presente ----
 
-bioclim_presente |> terra::writeRaster("bioclim_presente_res_0.5_arcmin.tif")
+bioclim_presente |> terra::writeRaster("bioclim_presente_res_2.5_arcmin.tif")
 
-zip(files = "bioclim_presente_res_0.5_arcmin.tif",
-    zipfile = "bioclim_presente_res_0.5_arcmin.zip")
+zip(files = "bioclim_presente_res_2.5_arcmin.tif",
+    zipfile = "bioclim_presente_res_2.5_arcmin.zip")
 
 ## Cenário futuro ----
 
-zip(files = ls(pattern = "bioclim_futuro"),
-    zipfile = "bioclim_futuro_res_0.5_arcmin.zip")
+exportar_cenarios_futuros <- function(rasters, tempo){
+  
+  rasters |> terra::writeRaster(paste0("bioclim_futuro_res_0.5_arcmin_",
+                                      tempo,
+                                      ".tif"))
+  
+}
+
+rasters <- ls(pattern = "bioclim_futuro_") |> 
+  mget(envir = globalenv())
+
+rasters
+
+purrr::map2(rasters,
+            tempo,
+            exportar_cenarios_futuros)
+
+zip(files = list.files(pattern = "bioclim_futuro"),
+    zipfile = "bioclim_futuro_res_2.5_arcmin.zip")
