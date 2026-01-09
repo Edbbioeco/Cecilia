@@ -78,7 +78,7 @@ ggplot() +
 registros_sf |>
   sf::st_coordinates() |> 
   as.data.frame() |> 
-  dplyr::mutate(name = "Cenostigma pyramidale") |> 
+  dplyr::mutate(sp = "Cenostigma pyramidale") |> 
   dplyr::rename("Longitude" = X,
                 "Latitude" = Y) |> 
   spThin::thin(long.col = "Longitude",
@@ -101,8 +101,7 @@ registros_thin
 registros_sf |>
   sf::st_coordinates() |> 
   as.data.frame() |> 
-  dplyr::mutate(name = "Cenostigma pyramidale") |> 
+  dplyr::mutate(sp = "Cenostigma pyramidale") |> 
   dplyr::rename("Longitude" = X,
                 "Latitude" = Y) |> 
   readr::write_csv("registros_filtrados.csv")
-|> 
