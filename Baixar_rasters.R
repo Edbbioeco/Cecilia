@@ -63,8 +63,27 @@ ggplot() +
 ### Importando ----
 
 baixar_cenarios_futuros <- function(cenario){
-  raster_futuro <- geodata::cmip6_world()
+  
+  raster_futuro <- geodata::cmip6_world(model = "CanESM5", 
+                                        ssp = cenario, 
+                                        time = "2041-2060", 
+                                        var = "bioc", 
+                                        res = 0.5, 
+                                        path = "dados_worldclim")
+  
+  raster_futuro %<>%
+    terra::crop(br) %<>%
+    terra::mask(br)
+  
+  assign(paste0("bioclim_futuro_", cenario),
+         raster_futuro,
+         envir = globalenv())
+  
 }
+
+cenario <- c("245", "370", "585")
+
+purrr::map(cenario, baixar_cenarios_futuros)
 
 ### Visualizando ---- 
 
