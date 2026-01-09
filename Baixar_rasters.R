@@ -76,3 +76,8 @@ bioclim_presente |> terra::writeRaster("bioclim_presente_res_0.5_arcmin.tif")
 
 zip(files = "bioclim_presente_res_0.5_arcmin.tif",
     zipfile = "bioclim_presente_res_0.5_arcmin.zip")
+
+## Cenário futuro ----
+
+zip(files = ls(pattern = "bioclim_futuro"),
+    zipfile = "bioclim_futuro_res_0.5_arcmin.zip")
