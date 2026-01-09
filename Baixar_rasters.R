@@ -73,3 +73,6 @@ baixar_cenarios_futuros <- function(cenario){
 ## Cenário presente ----
 
 bioclim_presente |> terra::writeRaster("bioclim_presente_res_0.5_arcmin.tif")
+
+zip(files = "bioclim_presente_res_0.5_arcmin.tif",
+    zipfile = "bioclim_presente_res_0.5_arcmin")
