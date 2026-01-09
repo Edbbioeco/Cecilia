@@ -17,3 +17,9 @@ gert::git_push(remote = "origin", force = TRUE)
 # Pullando ----
 
 gert::git_pull()
+
+# Resetando ----
+
+gert::git_reset_soft(ref = "HEAD~1")
+
+gert::git_reset_hard(ref = "HEAD~1")
