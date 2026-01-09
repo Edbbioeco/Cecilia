@@ -87,6 +87,21 @@ purrr::map(cenario, baixar_cenarios_futuros)
 
 ### Visualizando ---- 
 
+ggplot() +
+  tidyterra::geom_spatraster(data = bioclim_futuro_245) +
+  scale_fill_viridis_c(na.value = NA) +
+  facet_wrap(~lyr)
+
+ggplot() +
+  tidyterra::geom_spatraster(data = bioclim_futuro_370) +
+  scale_fill_viridis_c(na.value = NA) +
+  facet_wrap(~lyr)
+
+ggplot() +
+  tidyterra::geom_spatraster(data = bioclim_futuro_585) +
+  scale_fill_viridis_c(na.value = NA) +
+  facet_wrap(~lyr)
+
 # Exportando ----
 
 ## Cenário presente ----
