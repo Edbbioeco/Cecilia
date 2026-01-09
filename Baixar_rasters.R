@@ -118,14 +118,11 @@ ggplot() +
 
 bioclim_presente |> terra::writeRaster("bioclim_presente_res_2.5_arcmin.tif")
 
-zip(files = "bioclim_presente_res_2.5_arcmin.tif",
-    zipfile = "bioclim_presente_res_2.5_arcmin.zip")
-
 ## Cenário futuro ----
 
 exportar_cenarios_futuros <- function(rasters, tempo){
   
-  rasters |> terra::writeRaster(paste0("bioclim_futuro_res_0.5_arcmin_",
+  rasters |> terra::writeRaster(paste0("bioclim_futuro_res_2.5_arcmin_",
                                       tempo,
                                       ".tif"))
   
@@ -139,6 +136,3 @@ rasters
 purrr::map2(rasters,
             tempo,
             exportar_cenarios_futuros)
-
-zip(files = list.files(pattern = "bioclim_futuro"),
-    zipfile = "bioclim_futuro_res_2.5_arcmin.zip")
