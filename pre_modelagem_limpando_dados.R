@@ -82,11 +82,11 @@ registros_sf |>
   dplyr::rename("Longitude" = X,
                 "Latitude" = Y) |> 
   spThin::thin(long.col = "Longitude",
-                          lat.col = "Latitude",
-                          spec.col = "name",
-                          thin.par = 4.65 * 2,
-                          reps = 5,
-                          out.dir = getwd())
+               lat.col = "Latitude",
+               spec.col = "name", 
+               thin.par = 4.65 * 2,
+               reps = 5,
+               out.dir = getwd())
 
 ## Importando os novos registros ----
 
@@ -105,3 +105,4 @@ registros_sf |>
   dplyr::rename("Longitude" = X,
                 "Latitude" = Y) |> 
   readr::write_csv("registros_filtrados.csv")
+|> 
