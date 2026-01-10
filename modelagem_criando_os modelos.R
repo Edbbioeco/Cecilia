@@ -44,6 +44,7 @@ registros |> dplyr::glimpse()
 ### Transformando em vetor espacial ----
 
 registros_vect <- registros |> 
+  dplyr::mutate(sp = sp |> stringr::str_replace(" ", "_")) |> 
   sf::st_as_sf(coords = c("Longitude", "Latitude"),
                crs = 4674) |> 
   terra::vect()
@@ -224,11 +225,33 @@ ggplot() +
 
 ## Objeto sdmdata ----
 
-sdmadata <- sdm::sdmData(sp ~ .,
+sdmdata <- sdm::sdmData(sp ~ .,
                          train = registros_vect,
                          predictors = bio_presente,
                          bg = list(method = "gRandom", n = 1000))
 
-sdmadata
+sdmdata
+
+## Lista de algorítimos ----
+
+sdm::getmethodNames()
 
 ## Modelos sdm ----
+
+modelo_sdm <- sdm::sdm(Cenostigma_pyramidale ~ .,
+                       data = sdmdata,
+                       methods = c("gam",
+                                   "glm",
+                                   "maxent",
+                                   "maxlike"),
+                       replication = "sub",
+                       test.percent = 30,
+                       n = 5)
+
+modelo_sdm
+
+## Exportando e importando o modelo ----
+
+modelo_sdm |> sdm::write.sdm("modelo_sdm.sdm")
+
+modelo_sdm <- sdm::read.sdm("modelo_sdm.sdm")
