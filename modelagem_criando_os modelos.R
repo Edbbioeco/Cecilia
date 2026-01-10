@@ -349,7 +349,7 @@ futuro_ensembles |> terra::writeRaster("ensemble_futuro.tif",
 ### Criando ----
 
 area_nicho_presente <- sdm::pa(ensemble_presente,
-                              modelo_sdm)
+                               modelo_sdm)
 
 ### Visualizando ----
 
@@ -370,6 +370,48 @@ area_nicho_presente |> terra::writeRaster("area_nicho_presente.tif",
 
 ### Criando ----
 
+areas_nichos_futuros <- function(ensembles, nome){
+  
+  nicho_futuro <- sdm::pa(ensembles,
+                          modelo_sdm)
+  
+  assign(paste0("nicho_area_futuro_", nome),
+         nicho_futuro,
+         envir = globalenv())
+  
+}
+
+ensembles <- ls(pattern = "ensemble_futuro_") |> 
+  mget(envir = globalenv())
+
+nome <- c("2021-2040",
+          "2041-2060",
+          "2061-2080",
+          "2081-2100")
+
+purrr::map2(ensembles, nome, areas_nichos_futuros)
+
 ### Visualizando ----
 
+area_nicho_futuro <- ls(pattern = "nicho_area_futuro") |> 
+  mget(envir = globalenv()) |> 
+  terra::rast()
+
+area_nicho_futuro
+
+names(area_nicho_futuro) <- c("2021-2040",
+                              "2041-2060",
+                              "2061-2080",
+                              "2081-2100")
+
+ggplot() +
+  tidyterra::geom_spatraster(data = area_nicho_futuro) +
+  scale_fill_viridis_c(na.value = NA,
+                       breaks = c(0, 1),
+                       limits = c(0, 1)) +
+  facet_wrap(~lyr)
+
 ### Exportando ----
+
+area_nicho_futuro |> terra::writeRaster("area_nicho_futuro.tif",
+                                        overwrite = TRUE)
