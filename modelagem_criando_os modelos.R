@@ -224,17 +224,11 @@ ggplot() +
 
 ## Objeto sdmdata ----
 
-criar_sdmdata <- function(variavel, nome){
-  
-  sdmadata <- sdm::sdmData(sp ~ .,
-                           train = variavel,
-                           predictors = bio_presente,
-                           bg = list(method = "gRandom", n = 1000))
-  
-  assign(paste0("sdmdata_", nome),
-         sdmadata,
-         envir = globalenv())
-  
-}
+sdmadata <- sdm::sdmData(sp ~ .,
+                         train = registros_vect,
+                         predictors = bio_presente,
+                         bg = list(method = "gRandom", n = 1000))
+
+sdmadata
 
 ## Modelos sdm ----
