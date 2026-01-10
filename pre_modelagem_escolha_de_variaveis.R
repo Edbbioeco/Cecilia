@@ -118,3 +118,7 @@ multicol |>
 ## Variáveis para excluir ----
 
 # Bio01, Bio02, Bio03, Bio05, Bio06, Bio08, Bio09, Bio10, Bio12, Bio13, Bio14, Bio15, Bio17
+
+excluir_var <- c(1:3, 5, 6, 8:10, 12:15, 17)
+
+excluir_var
