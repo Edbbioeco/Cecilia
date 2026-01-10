@@ -342,15 +342,29 @@ ggplot() +
 futuro_ensembles |> terra::writeRaster("ensemble_futuro.tif",
                                        overwrite = TRUE)
 
-# Área de presença ----
+# Área de nicho ----
 
 ## Presente ----
 
 ### Criando ----
 
+area_nicho_presente <- sdm::pa(ensemble_presente,
+                              modelo_sdm)
+
 ### Visualizando ----
 
+area_nicho_presente
+
+ggplot() +
+  tidyterra::geom_spatraster(data = area_nicho_presente) +
+  scale_fill_viridis_c(na.value = NA,
+                       breaks = c(0, 1),
+                       limits = c(0, 1))
+
 ### Exportando ----
+
+area_nicho_presente |> terra::writeRaster("area_nicho_presente.tif",
+                                          overwrite = TRUE)
 
 ## Futuro ----
 
