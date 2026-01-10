@@ -260,10 +260,57 @@ modelo_sdm <- sdm::read.sdm("modelo_sdm.sdm")
 
 ## Presente ----
 
+### Criando ----
+
+predicao_presente <- terra::predict(modelo_sdm,
+                                    bio_presente,
+                                    overwrite = TRUE)
+
+### Ensemble do modelo ----
+
+ensemble_presente <- sdm::ensemble(modelo_sdm,
+                                   newdata = predicao_presente,
+                                   setting = list(method = "weighted",
+                                                  stat = "AUC"))
+
+### Visualizando ----
+
+ensemble_presente
+
+ggplot() +
+  tidyterra::geom_spatraster(data = ensemble_presente) +
+  scale_fill_viridis_c(na.value = NA,
+                       limits = c(0, 1))
+
+### Exportando ----
+
+ensemble_presente |> terra::writeRaster("ensemble_presente.tif",
+                                        overwrite = TRUE)
+
 ## Futuro ----
+
+### Criando ----
+
+### Ensemble do modelo ----
+
+### Visualizando ----
+
+### Exportando ----
 
 # Área de presença ----
 
 ## Presente ----
 
+### Criando ----
+
+### Visualizando ----
+
+### Exportando ----
+
 ## Futuro ----
+
+### Criando ----
+
+### Visualizando ----
+
+### Exportando ----
