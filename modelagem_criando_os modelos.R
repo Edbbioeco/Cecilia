@@ -255,3 +255,15 @@ modelo_sdm
 modelo_sdm |> sdm::write.sdm("modelo_sdm.sdm")
 
 modelo_sdm <- sdm::read.sdm("modelo_sdm.sdm")
+
+# Predição ----
+
+## Presente ----
+
+## Futuro ----
+
+# Área de presença ----
+
+## Presente ----
+
+## Futuro ----
