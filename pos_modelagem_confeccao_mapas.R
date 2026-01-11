@@ -149,6 +149,28 @@ ggplot() +
 
 # Mapa de área de probabilidade de ocorrência para o presente ----
 
+ggplot() +
+  geom_sf(data = br, linewidth = 1, aes(color = "Brasil")) +
+  tidyterra::geom_spatraster(data = prob_presente) +
+  geom_sf(data = caatinga, fill = NA, linewidth = 1, aes(color = "Caatinga")) +
+  scale_fill_viridis_c(na.value = NA,
+                       limits = c(0, 1),
+                       name = "Probabilidade ocorrência",
+                       guide = guide_colourbar(title.position = "top",
+                                               title.hjust = 0.5,
+                                               barwidth = 20)) +
+  scale_color_manual(values = c("Brasil" = "black",
+                                "Caatinga" = "orangered"),
+                     name = NULL) +
+  geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        legend.text = element_text(size = 20, color = "black"),
+        legend.title = element_text(size = 20, color = "black"),
+        legend.position = "bottom",
+        panel.background = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
 # Mapa de área de probabilidade de ocorrência para o futuro -----
 
 # Mapa de área de nicho para o presente ----
