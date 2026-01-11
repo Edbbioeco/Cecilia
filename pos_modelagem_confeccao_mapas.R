@@ -231,7 +231,7 @@ ggsave(filename = "mapa_area_nicho_ocorrencia_presente.png",
 
 ggplot() +
   geom_sf(data = br, linewidth = 1, aes(color = "Brasil")) +
-  tidyterra::geom_spatraster(data = nicho_presente) +
+  tidyterra::geom_spatraster(data = nicho_futuro) +
   geom_sf(data = caatinga, fill = NA, linewidth = 1, aes(color = "Caatinga")) +
   scale_fill_viridis_d(na.value = NA,
                        name = NULL,
@@ -244,13 +244,15 @@ ggplot() +
   guides(color = guide_legend(order = 1),
          fill  = guide_legend(order = 2)) +
   geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
+  facet_wrap(~lyr) +
   theme_bw() +
   theme(axis.text = element_text(size = 20, color = "black"),
         legend.text = element_text(size = 20, color = "black"),
         legend.title = element_text(size = 20, color = "black"),
         legend.position = "bottom",
-        panel.background = element_rect(color = "black", linewidth = 1)) +
+        panel.background = element_rect(color = "black", linewidth = 1),
+        strip.text = element_text(size = 20, color = "black")) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "mapa_area_nicho_ocorrencia_presente.png",
+ggsave(filename = "mapa_area_nicho_ocorrencia_futuro.png",
        height = 10, width = 12)
