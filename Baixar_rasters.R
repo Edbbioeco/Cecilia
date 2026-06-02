@@ -29,10 +29,14 @@ ggplot() +
 
 ## Raster para o presente ----
 
+### Pasta para manter os raster ----
+
+dir.create("./var_presente")
+
 ### Importando ----
 
 bioclim_presente <- geodata::worldclim_country(country = "BRA",
-                                               var = "bio", 
+                                               var = "bio",
                                                path = getwd(),
                                                res = 2.5)
 
@@ -63,22 +67,22 @@ ggplot() +
 ### Importando ----
 
 baixar_cenarios_futuros <- function(tempo){
-  
-  raster_futuro <- geodata::cmip6_world(model = "ACCESS-CM2", 
-                                        ssp = "585", 
-                                        time = tempo, 
-                                        var = "bioc", 
-                                        res = 2.5, 
+
+  raster_futuro <- geodata::cmip6_world(model = "ACCESS-CM2",
+                                        ssp = "585",
+                                        time = tempo,
+                                        var = "bioc",
+                                        res = 2.5,
                                         path = "dados_worldclim")
-  
+
   raster_futuro %<>%
     terra::crop(br) %<>%
     terra::mask(br)
-  
+
   assign(paste0("bioclim_futuro_", tempo),
          raster_futuro,
          envir = globalenv())
-  
+
 }
 
 tempo <- c("2021-2040",
@@ -90,7 +94,7 @@ tempo
 
 purrr::map(tempo, baixar_cenarios_futuros)
 
-### Visualizando ---- 
+### Visualizando ----
 
 ggplot() +
   tidyterra::geom_spatraster(data = `bioclim_futuro_2021-2040`) +
@@ -121,14 +125,14 @@ bioclim_presente |> terra::writeRaster("bioclim_presente_res_2.5_arcmin.tif")
 ## Cenário futuro ----
 
 exportar_cenarios_futuros <- function(rasters, tempo){
-  
+
   rasters |> terra::writeRaster(paste0("bioclim_futuro_res_2.5_arcmin_",
                                       tempo,
                                       ".tif"))
-  
+
 }
 
-rasters <- ls(pattern = "bioclim_futuro_") |> 
+rasters <- ls(pattern = "bioclim_futuro_") |>
   mget(envir = globalenv())
 
 rasters
