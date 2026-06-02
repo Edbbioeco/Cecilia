@@ -66,24 +66,12 @@ ggplot() +
 
 ### Importando ----
 
-baixar_cenarios_futuros <- function(tempo){
+cenario <- c("126",
+             "245",
+             "370",
+             "585")
 
-  raster_futuro <- geodata::cmip6_world(model = "ACCESS-CM2",
-                                        ssp = "585",
-                                        time = tempo,
-                                        var = "bioc",
-                                        res = 2.5,
-                                        path = "dados_worldclim")
-
-  raster_futuro %<>%
-    terra::crop(br) %<>%
-    terra::mask(br)
-
-  assign(paste0("bioclim_futuro_", tempo),
-         raster_futuro,
-         envir = globalenv())
-
-}
+cenario
 
 tempo <- c("2021-2040",
            "2041-2060",
@@ -92,7 +80,23 @@ tempo <- c("2021-2040",
 
 tempo
 
-purrr::map(tempo, baixar_cenarios_futuros)
+purrr::map(cenario, \(cenario){
+
+  purrr::map(tempo, \(tempo){
+
+    geodata::cmip6_world(model = "ACCESS-CM2",
+                         ssp = cenario,
+                         time = tempo,
+                         var = "bioc",
+                         res = 0.5,
+                         path = "dados_worldclim") |>
+      terra::crop(br) |>
+      terra::mask(br)
+
+    })
+
+  }) |>
+  setNames(paste0("cenario_", cenario))
 
 ### Visualizando ----
 
