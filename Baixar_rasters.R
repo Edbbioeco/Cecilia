@@ -38,7 +38,7 @@ dir.create("./var_presente")
 bioclim_presente <- geodata::worldclim_country(country = "BRA",
                                                var = "bio",
                                                path = "./var_presente/",
-                                               res = 2.5)
+                                               res = 0.5)
 
 ### Visualizando ----
 
@@ -58,7 +58,7 @@ bioclim_presente %<>%
 bioclim_presente
 
 ggplot() +
-  tidyterra::geom_spatraster(data = bioclim_presente) +
+  tidyterra::geom_spatraster(data = bioclim_presente[[1]]) +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
