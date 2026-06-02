@@ -66,7 +66,7 @@ ggplot() +
 
 ## Cenários futuros ----
 
-### Importando ----
+### Criar pastas dos cenários e tempos----
 
 cenario <- c("126",
              "245",
@@ -81,6 +81,11 @@ tempo <- c("2021-2040",
            "2081-2100")
 
 tempo
+
+purrr::map2(cenario, tempo, ~dir.create(paste0("./cenario_", .x, "/", .y),
+                                        recursive = TRUE))
+
+### Importando ----
 
 purrr::map(cenario, \(cenario){
 
