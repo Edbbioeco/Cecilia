@@ -37,7 +37,7 @@ dir.create("./var_presente")
 
 bioclim_presente <- geodata::worldclim_country(country = "BRA",
                                                var = "bio",
-                                               path = getwd(),
+                                               path = "./var_presente/",
                                                res = 2.5)
 
 ### Visualizando ----
