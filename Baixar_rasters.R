@@ -95,7 +95,9 @@ purrr::map(cenario, \(cenario){
 
 ### Importando ----
 
-purrr::map2(cenario |> rep(each = 4), tempo |> rep(times = 4), \(cenario, tempo){
+bioclim_futuro <- purrr::map2(cenario |> rep(each = 4),
+                              tempo |> rep(times = 4),
+                              \(cenario, tempo){
 
     geodata::cmip6_world(country = "BRA",
                          model = "ACCESS-CM2",
