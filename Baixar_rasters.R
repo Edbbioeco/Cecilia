@@ -18,14 +18,14 @@ library(terra)
 
 ### Importando ----
 
-br <- geobr::read_country()
+caa <- sf::st_read("shapefile_caatinga.shp")
 
 ### Visualizando ----
 
-br
+caa
 
 ggplot() +
-  geom_sf(data = br)
+  geom_sf(data = caa)
 
 ## Raster para o presente ----
 
@@ -52,8 +52,8 @@ ggplot() +
 ### Recortando ----
 
 bioclim_presente %<>%
-  terra::crop(br) %<>%
-  terra::mask(br)
+  terra::crop(caa) %<>%
+  terra::mask(caa)
 
 bioclim_presente
 
@@ -90,8 +90,8 @@ purrr::map(cenario, \(cenario){
                          var = "bioc",
                          res = 0.5,
                          path = "dados_worldclim") |>
-      terra::crop(br) |>
-      terra::mask(br)
+      terra::crop(caa) |>
+      terra::mask(caa)
 
     })
 
