@@ -92,12 +92,16 @@ purrr::map(cenario, \(cenario){
                          var = "bioc",
                          res = 0.5,
                          path = "dados_worldclim") |>
-      terra::crop(caa) |>
-      terra::mask(caa)
+      terra::crop(caa |>
+                    sf::st_concave_hull(ratio = 0.15)) |>
+      terra::mask(caa |>
+                    sf::st_concave_hull(ratio = 0.15))
 
-    })
+    },
+    .progress = TRUE)
 
-  }) |>
+  },
+  .progress = TRUE) |>
   setNames(paste0("cenario_", cenario))
 
 ### Visualizando ----
