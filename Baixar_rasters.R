@@ -82,8 +82,21 @@ tempo <- c("2021-2040",
 
 tempo
 
-purrr::map2(cenario, tempo, ~dir.create(paste0("./cenario_", .x, "/", .y),
-                                        recursive = TRUE))
+purrr::map(cenario, \(cenario){
+
+  purrr::map(tempo, \(tempo){
+
+    dir.create(paste0("./cenario_", cenario, "/", tempo),
+             recursive = TRUE)
+
+    })
+
+  })
+
+### Listar pastas ----
+
+pastas <- purrr::map_chr(cenario, ~list.files(path = paste0("cenario_", .x),
+                                              full.names = TRUE))
 
 ### Importando ----
 
