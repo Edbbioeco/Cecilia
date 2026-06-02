@@ -93,11 +93,6 @@ purrr::map(cenario, \(cenario){
 
   })
 
-### Listar pastas ----
-
-pastas <- purrr::map_chr(cenario, ~list.files(path = paste0("cenario_", .x),
-                                              full.names = TRUE))
-
 ### Importando ----
 
 purrr::map(cenario, \(cenario){
@@ -109,7 +104,7 @@ purrr::map(cenario, \(cenario){
                          time = tempo,
                          var = "bioc",
                          res = 0.5,
-                         path = "dados_worldclim") |>
+                         path = paste0("cenario_", cenario, "/", tempo)) |>
       terra::crop(caa |>
                     sf::st_concave_hull(ratio = 0.15)) |>
       terra::mask(caa |>
