@@ -95,11 +95,10 @@ purrr::map(cenario, \(cenario){
 
 ### Importando ----
 
-purrr::map(cenario, \(cenario){
+purrr::map2(cenario, tempo, \(cenario, tempo){
 
-  purrr::map(tempo, \(tempo){
-
-    geodata::cmip6_world(model = "ACCESS-CM2",
+    geodata::cmip6_world(country = "BRA",
+                         model = "ACCESS-CM2",
                          ssp = cenario,
                          time = tempo,
                          var = "bioc",
@@ -110,12 +109,9 @@ purrr::map(cenario, \(cenario){
       terra::mask(caa |>
                     sf::st_concave_hull(ratio = 0.15))
 
-    },
-    .progress = TRUE)
-
   },
   .progress = TRUE) |>
-  setNames(paste0("cenario_", cenario))
+  setNames(paste0("cenario_", cenario, "-", tempo))
 
 ### Visualizando ----
 
