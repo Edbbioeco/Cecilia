@@ -52,8 +52,10 @@ ggplot() +
 ### Recortando ----
 
 bioclim_presente %<>%
-  terra::crop(caa) %<>%
-  terra::mask(caa)
+  terra::crop(caa |>
+                sf::st_concave_hull(ratio = 0.15)) %<>%
+  terra::mask(caa |>
+                sf::st_concave_hull(ratio = 0.15))
 
 bioclim_presente
 
