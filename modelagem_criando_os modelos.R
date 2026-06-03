@@ -92,22 +92,7 @@ bio_futuro
 ### Visualizando ----
 
 ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2021-2040`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2041-2060`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2061-2080`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2081-2100`) +
+  tidyterra::geom_spatraster(data = bio_futuro[[1]][[1]]) +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
