@@ -113,7 +113,11 @@ bioclim_futuro <- purrr::map2(cenario |> rep(each = 4),
 
   },
   .progress = TRUE) |>
-  setNames(paste0("cenario_", cenario, "-", tempo))
+  setNames(paste0("cenario_",
+                  cenario |> rep(each = 4), "-",
+                  tempo |> rep(times = 4)))
+
+bioclim_futuro
 
 ### Visualizando ----
 
