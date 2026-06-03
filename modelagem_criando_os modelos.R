@@ -39,10 +39,10 @@ registros |> dplyr::glimpse()
 
 ### Transformando em vetor espacial ----
 
-registros_vect <- registros |> 
-  dplyr::mutate(sp = sp |> stringr::str_replace(" ", "_")) |> 
+registros_vect <- registros |>
+  dplyr::mutate(sp = sp |> stringr::str_replace(" ", "_")) |>
   sf::st_as_sf(coords = c("Longitude", "Latitude"),
-               crs = 4674) |> 
+               crs = 4674) |>
   terra::vect()
 
 registros_vect
@@ -51,7 +51,7 @@ registros_vect
 
 ### Importando ----
 
-bio_presente <- terra::rast("bioclim_presente_res_2.5_arcmin.tif")
+bio_presente <- terra::rast("./var_presente/presente.tif")
 
 names(bio_presente) <- c(paste0("Bio0", 1:9),
                          paste0("Bio", 10:19))
@@ -70,16 +70,16 @@ ggplot() +
 ### Importando ----
 
 importar_variaveis_futuras <- function(variavel, tempo){
-  
+
   variavel_futura <- terra::rast(variavel)
-  
+
   names(variavel_futura) <- c(paste0("Bio0", 1:9),
                               paste0("Bio", 10:19))
-  
+
   assign(paste0("bio_futuro_", tempo),
          variavel_futura,
          envir = globalenv())
-    
+
 }
 
 variavel <- list.files(pattern = "bioclim_futuro")
@@ -122,18 +122,18 @@ ggplot() +
 ## Recortando ----
 
 recortar_variaveis <- function(variavel, nome){
-  
-  variavel_crop <- variavel |> 
-    terra::crop(caatinga) |> 
+
+  variavel_crop <- variavel |>
+    terra::crop(caatinga) |>
     terra::mask(caatinga)
-  
+
   assign(nome,
          variavel_crop,
          envir = globalenv())
-  
+
 }
 
-variavel <- ls(pattern = "bio_") |> 
+variavel <- ls(pattern = "bio_") |>
   mget(envir = globalenv())
 
 variavel
@@ -172,16 +172,16 @@ ggplot() +
 ## Excluindo ----
 
 excluindo_variaveis <- function(variavel, nome){
-  
+
   variavel_exc <- variavel[[-c(1:3, 5, 6, 8:10, 12:15, 17)]]
-  
+
   assign(nome,
          variavel_exc,
          envir = globalenv())
-  
+
 }
 
-variavel <- ls(pattern = "bio_") |> 
+variavel <- ls(pattern = "bio_") |>
   mget(envir = globalenv())
 
 variavel
@@ -288,23 +288,23 @@ ensemble_presente |> terra::writeRaster("ensemble_presente.tif",
 ### Criando a predição e o ensemble ----
 
 predicao__ensemble_futuro <- function(variavel, nome){
-  
+
   pred_fut <- terra::predict(modelo_sdm,
                              variavel,
                              overwrite = TRUE)
-  
+
   ens_fut <- sdm::ensemble(modelo_sdm,
                            newdata = pred_fut,
                            setting = list(method = "weighted",
                                           stat = "AUC"))
-  
+
   assign(paste0("ensemble_futuro_", nome),
          ens_fut,
          envir = globalenv())
-  
+
 }
 
-variavel <- ls(pattern = "bio_futuro_") |> 
+variavel <- ls(pattern = "bio_futuro_") |>
   mget(envir = globalenv())
 
 variavel
@@ -314,12 +314,12 @@ nome <- c("2021-2040",
           "2061-2080",
           "2081-2100")
 
-nome 
+nome
 
 purrr::map2(variavel, nome, predicao__ensemble_futuro)
 
-futuro_ensembles <- ls(pattern = "ensemble_futuro_") |> 
-  mget(envir = globalenv()) |> 
+futuro_ensembles <- ls(pattern = "ensemble_futuro_") |>
+  mget(envir = globalenv()) |>
   terra::rast()
 
 ### Visualizando ----
@@ -371,17 +371,17 @@ area_nicho_presente |> terra::writeRaster("area_nicho_presente.tif",
 ### Criando ----
 
 areas_nichos_futuros <- function(ensembles, nome){
-  
+
   nicho_futuro <- sdm::pa(ensembles,
                           modelo_sdm)
-  
+
   assign(paste0("nicho_area_futuro_", nome),
          nicho_futuro,
          envir = globalenv())
-  
+
 }
 
-ensembles <- ls(pattern = "ensemble_futuro_") |> 
+ensembles <- ls(pattern = "ensemble_futuro_") |>
   mget(envir = globalenv())
 
 nome <- c("2021-2040",
@@ -393,8 +393,8 @@ purrr::map2(ensembles, nome, areas_nichos_futuros)
 
 ### Visualizando ----
 
-area_nicho_futuro <- ls(pattern = "nicho_area_futuro") |> 
-  mget(envir = globalenv()) |> 
+area_nicho_futuro <- ls(pattern = "nicho_area_futuro") |>
+  mget(envir = globalenv()) |>
   terra::rast()
 
 area_nicho_futuro
