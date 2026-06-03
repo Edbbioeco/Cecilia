@@ -125,6 +125,21 @@ purrr::imap(bioclim_futuro, ~ggplot() +
 
 dir.create("./var_passado")
 
+### Baixar ----
+
+passado <- rpaleoclim::paleoclim(period = "lgm",
+                                 resolution = "30s",
+                                 region = caa |>
+                                   sf::st_concave_hull(ratio = 0.15) |>
+                                   terra::ext(),
+                                 skip_cache = TRUE) |>
+  terra::crop(caa |>
+                sf::st_concave_hull(ratio = 0.15)) |>
+  terra::mask(caa |>
+                sf::st_concave_hull(ratio = 0.15))
+
+passado
+
 # Exportando ----
 
 ## Cenário presente ----
