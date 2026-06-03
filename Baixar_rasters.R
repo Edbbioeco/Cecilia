@@ -96,7 +96,7 @@ bioclim_futuro <- purrr::map2(cenario |> rep(each = 4),
                          time = tempo,
                          var = "bioc",
                          res = 0.5,
-                         path = paste0("./var_futuro") |>
+                         path = "./var_futuro") |>
       terra::crop(caa |>
                     sf::st_concave_hull(ratio = 0.15)) |>
       terra::mask(caa |>
