@@ -348,3 +348,13 @@ purrr::map2(area_nicho_futuro,
 
 area_nicho_passado <- sdm::pa(ensemble_passado,
                               modelo_sdm)
+
+### Visualizando ----
+
+area_nicho_passado
+
+ggplot() +
+  tidyterra::geom_spatraster(data = area_nicho_passado) +
+  scale_fill_viridis_c(na.value = NA,
+                       breaks = c(0, 1),
+                       limits = c(0, 1))
