@@ -138,7 +138,12 @@ passado <- rpaleoclim::paleoclim(period = "lgm",
   terra::mask(caa |>
                 sf::st_concave_hull(ratio = 0.15))
 
+### Visualizar ----
+
 passado
+
+ggplot() +
+  tidyterra::geom_spatraster(data = passado[[1]])
 
 # Exportando ----
 
