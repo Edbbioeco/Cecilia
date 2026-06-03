@@ -277,6 +277,15 @@ ensemble_passado <- sdm::ensemble(modelo_sdm,
                                   setting = list(method = "weighted",
                                                  stat = "AUC"))
 
+### Visualizando ----
+
+ensemble_passado
+
+ggplot() +
+  tidyterra::geom_spatraster(data = ensemble_passado) +
+  scale_fill_viridis_c(na.value = NA,
+                       limits = c(0, 1))
+
 # Área de nicho ----
 
 ## Presente ----
