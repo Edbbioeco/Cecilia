@@ -96,6 +96,20 @@ ggplot() +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
+## Variáveis bioclimáticas para o passado ----
+
+### Importar ----
+
+bio_passado <- terra::rast("./var_passado/passado.tif")
+
+### Visualizar ----
+
+bio_passado
+
+ggplot() +
+  tidyterra::geom_spatraster(data = bio_passado[[1]]) +
+  scale_fill_viridis_c(na.value = NA)
+
 # Recortando e excluindo as variáveis dos rasters ----
 
 ## Recortando ----
