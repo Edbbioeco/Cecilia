@@ -358,3 +358,8 @@ ggplot() +
   scale_fill_viridis_c(na.value = NA,
                        breaks = c(0, 1),
                        limits = c(0, 1))
+
+### Exportando ----
+
+area_nicho_passado |> terra::writeRaster("area_nicho_passado.tif",
+                                         overwrite = TRUE)
