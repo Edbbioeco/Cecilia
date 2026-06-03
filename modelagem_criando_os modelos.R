@@ -319,26 +319,9 @@ area_nicho_presente |> terra::writeRaster("area_nicho_presente.tif",
 
 ### Criando ----
 
-areas_nichos_futuros <- function(ensembles, nome){
-
-  nicho_futuro <- sdm::pa(ensembles,
-                          modelo_sdm)
-
-  assign(paste0("nicho_area_futuro_", nome),
-         nicho_futuro,
-         envir = globalenv())
-
-}
-
-ensembles <- ls(pattern = "ensemble_futuro_") |>
-  mget(envir = globalenv())
-
-nome <- c("2021-2040",
-          "2041-2060",
-          "2061-2080",
-          "2081-2100")
-
-purrr::map2(ensembles, nome, areas_nichos_futuros)
+area_nicho_futuro <- purrr::map(ensemble_futuro, ~sdm::pa(.x,
+                                                          modelo_sdm)) |>
+  setNames(paste0("pa_", ensemble_futuro |> names()))
 
 ### Visualizando ----
 
