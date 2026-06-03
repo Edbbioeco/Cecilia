@@ -127,6 +127,12 @@ bio_futuro <- purrr::map(bio_futuro, ~.x[[-c(1:3, 5, 6, 8:10, 12:15, 17)]])
 
 bio_futuro
 
+## Passado ----
+
+bio_passado <- bio_passado[[-c(1:3, 5, 6, 8:10, 12:15, 17)]]
+
+bio_passado
+
 # Criando os modelos ----
 
 ## Objeto sdmdata ----
