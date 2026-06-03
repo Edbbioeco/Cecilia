@@ -262,6 +262,14 @@ purrr::map2(ensemble_futuro,
                                        .y,
                                        ".tif")))
 
+## Passado ----
+
+### Criando ----
+
+predicao_passado <- terra::predict(modelo_sdm,
+                                   bio_passado,
+                                   overwrite = TRUE)
+
 # Área de nicho ----
 
 ## Presente ----
