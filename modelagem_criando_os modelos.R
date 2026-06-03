@@ -255,8 +255,12 @@ purrr::map(ensemble_futuro, ~ggplot() +
 
 ### Exportando ----
 
-futuro_ensembles |> terra::writeRaster("ensemble_futuro.tif",
-                                       overwrite = TRUE)
+purrr::map2(ensemble_futuro,
+            ensemble_futuro |> names(),
+            ~terra::writeRaster(.x,
+                                paste0("ensemble_futuro_",
+                                       .y,
+                                       ".tif")))
 
 # Área de nicho ----
 
