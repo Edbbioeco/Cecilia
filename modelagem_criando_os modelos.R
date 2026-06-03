@@ -150,17 +150,25 @@ sdm::getmethodNames()
 
 ## Modelos sdm ----
 
-modelo_sdm <- sdm::sdm(Cenostigma_pyramidale ~ .,
-                       data = sdmdata,
-                       methods = c("gam",
-                                   "glm",
-                                   "maxent",
-                                   "maxlike"),
-                       replication = "sub",
-                       test.percent = 30,
-                       n = 5)
+### Criar multiplos modelos ----
 
-modelo_sdm
+modelos_sdm <- purrr::map(1:10, \(id){
+
+  sdm::sdm(Cenostigma_pyramidale ~ .,
+           data = sdmdata,
+           methods = c("gam",
+                       "glm",
+                       "maxent",
+                       "maxlike"),
+           replication = "sub",
+           test.percent = 30,
+           n = 5)
+
+  },
+  .progress = TRUE) |>
+  setNames(paste0("modelo_", 1:10))
+
+modelos_sdm
 
 ## Exportando e importando o modelo ----
 
