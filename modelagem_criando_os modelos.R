@@ -246,18 +246,12 @@ ensemble_futuro <- purrr::map(bio_futuro,
 
 ### Visualizando ----
 
-futuro_ensembles
+ensemble_futuro
 
-names(futuro_ensembles) <- c("2021-2040",
-                             "2041-2060",
-                             "2061-2080",
-                             "2081-2100")
-
-ggplot() +
-  tidyterra::geom_spatraster(data = futuro_ensembles) +
-  scale_fill_viridis_c(na.value = NA,
-                       limits = c(0, 1)) +
-  facet_wrap(~lyr)
+purrr::map(ensemble_futuro, ~ggplot() +
+             tidyterra::geom_spatraster(data = .x[[1]]) +
+             scale_fill_viridis_c(na.value = NA,
+                                  limits = c(0, 1)))
 
 ### Exportando ----
 
