@@ -170,6 +170,23 @@ modelos_sdm <- purrr::map(1:10, \(id){
 
 modelos_sdm
 
+### Escolher o modelo ----
+
+modelo_escolhido <- modelos_sdm[[purrr::map2(modelos_sdm,
+                                             paste0("modelo_", 1:10),
+                                             ~sdm::getEvaluation(x = .x) |>
+                                               dplyr::mutate(modelo = .y)) |>
+                                   dplyr::bind_rows() |>
+                                   dplyr::summarise(AUC = AUC |> mean(),
+                                                    TSS = TSS |> mean(),
+                                                    .by = modelo) |>
+                                   dplyr::arrange(AUC |> dplyr::desc(), TSS |>
+                                                    dplyr::desc()) |>
+                                   dplyr::slice_head(n = 1) |>
+                                   dplyr::pull(modelo)]]
+
+modelo_escolhido
+
 ## Exportando e importando o modelo ----
 
 modelo_sdm |> sdm::write.sdm("modelo_sdm.sdm")
