@@ -145,6 +145,26 @@ passado
 ggplot() +
   tidyterra::geom_spatraster(data = passado[[1]])
 
+### Organizar a ordem das variáveis ----
+
+passado |>
+  names()
+
+ordem <- passado |>
+  names() |>
+  stringr::str_replace("bio_", "") |>
+  as.numeric() |>
+  order()
+
+ordem
+
+passado_trat <- passado
+
+passado_trat <- passado_trat[[ordem]]
+
+passado_trat |>
+  names()
+
 # Exportando ----
 
 ## Cenário presente ----
