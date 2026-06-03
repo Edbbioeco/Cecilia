@@ -341,3 +341,10 @@ purrr::map2(area_nicho_futuro,
                                 paste0("area_nicho_futuro_",
                                        .y,
                                        ".tif")))
+
+## Passado ----
+
+### Criando ----
+
+area_nicho_passado <- sdm::pa(ensemble_passado,
+                              modelo_sdm)
