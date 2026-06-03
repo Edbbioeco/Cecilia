@@ -189,7 +189,8 @@ modelo_escolhido
 
 ## Exportando e importando o modelo ----
 
-modelo_sdm |> sdm::write.sdm("modelo_sdm.sdm")
+modelo_escolhido |> sdm::write.sdm("modelo_sdm.sdm",
+                                   overwrite = TRUE)
 
 modelo_sdm <- sdm::read.sdm("modelo_sdm.sdm")
 
