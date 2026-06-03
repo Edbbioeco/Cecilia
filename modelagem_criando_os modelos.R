@@ -238,13 +238,11 @@ ensemble_futuro <- purrr::map(bio_futuro,
 
   },
   .progress = TRUE) |>
-  purrr::map(~sdm::ensemble(.x,
-                            newdata = predicao_presente,
+  purrr::map(~sdm::ensemble(modelo_sdm,
+                            newdata = .x,
                             setting = list(method = "weighted",
                                            stat = "AUC")),
              .progress = TRUE)
-
-ensemble_futuro
 
 ### Visualizando ----
 
