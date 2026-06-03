@@ -270,6 +270,13 @@ predicao_passado <- terra::predict(modelo_sdm,
                                    bio_passado,
                                    overwrite = TRUE)
 
+### Ensemble do modelo ----
+
+ensemble_passado <- sdm::ensemble(modelo_sdm,
+                                  newdata = predicao_passado,
+                                  setting = list(method = "weighted",
+                                                 stat = "AUC"))
+
 # Área de nicho ----
 
 ## Presente ----
