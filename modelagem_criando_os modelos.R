@@ -69,31 +69,25 @@ ggplot() +
 
 ### Importando ----
 
-importar_variaveis_futuras <- function(variavel, tempo){
+variavel <- list.files(path = "./var_futuro/",
+                       full.names = TRUE)
+
+variavel
+
+bio_futuro <- purrr::map(variavel, \(variavel){
 
   variavel_futura <- terra::rast(variavel)
 
   names(variavel_futura) <- c(paste0("Bio0", 1:9),
                               paste0("Bio", 10:19))
 
-  assign(paste0("bio_futuro_", tempo),
-         variavel_futura,
-         envir = globalenv())
+  variavel_futura
 
-}
+  }) |>
+  setNames(list.files(path = "./var_futuro/") |>
+             stringr::str_remove(".tif"))
 
-variavel <- list.files(pattern = "bioclim_futuro")
-
-variavel
-
-tempo <- c("2021-2040",
-           "2041-2060",
-           "2061-2080",
-           "2081-2100")
-
-tempo
-
-purrr::map2(variavel, tempo, importar_variaveis_futuras)
+bio_futuro
 
 ### Visualizando ----
 
