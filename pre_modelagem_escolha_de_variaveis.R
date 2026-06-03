@@ -28,7 +28,7 @@ registros |> dplyr::glimpse()
 
 ### Transformando em shapefile ----
 
-registros_sf <- registros |> 
+registros_sf <- registros |>
   sf::st_as_sf(coords = c("Longitude", "Latitude"),
                crs = 4674)
 
@@ -41,7 +41,7 @@ ggplot() +
 
 ### Importando ----
 
-bioclim <- terra::rast("bioclim_presente_res_2.5_arcmin.tif")
+bioclim <- terra::rast("./var_presente/presente.tif")
 
 ### Visualizando ----
 
@@ -63,7 +63,7 @@ bioclim
 
 ## Extraindo os valores ----
 
-valores <- bioclim |> 
+valores <- bioclim |>
   terra::extract(registros_sf)
 
 valores
@@ -72,9 +72,9 @@ valores
 
 ### Criando a matriz ----
 
-multicol <- valores |> 
-  dplyr::select(-1) |> 
-  cor(method = "spearman") |> 
+multicol <- valores |>
+  dplyr::select(-1) |>
+  cor(method = "spearman") |>
   as.matrix()
 
 multicol
