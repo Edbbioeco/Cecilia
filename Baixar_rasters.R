@@ -145,7 +145,7 @@ ggplot() +
 
 ## Cenário presente ----
 
-bioclim_presente |> terra::writeRaster("bioclim_presente_res_2.5_arcmin.tif")
+bioclim_presente |> terra::writeRaster("./var_presente/presente.tif")
 
 ## Cenário futuro ----
 
