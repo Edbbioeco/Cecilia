@@ -12,6 +12,8 @@ library(magrittr)
 
 library(terra)
 
+library(pastclim)
+
 # Dados ----
 
 ## Shapefile da Caatinga ----
@@ -116,6 +118,12 @@ purrr::imap(bioclim_futuro, ~ggplot() +
               tidyterra::geom_spatraster(data = .x[[1]]) +
               labs(title = .y),
             .progress = TRUE)
+
+## Cenário passado ----
+
+### Criar pasta ----
+
+dir.create("./var_passado")
 
 # Exportando ----
 
