@@ -61,7 +61,7 @@ names(bio_presente) <- c(paste0("Bio0", 1:9),
 bio_presente
 
 ggplot() +
-  tidyterra::geom_spatraster(data = bio_presente) +
+  tidyterra::geom_spatraster(data = bio_presente[[1]]) +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
