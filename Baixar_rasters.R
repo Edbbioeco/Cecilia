@@ -68,6 +68,10 @@ ggplot() +
 
 ### Criar pastas dos cenários e tempos----
 
+dir.create("./var_futuro")
+
+### Importando ----
+
 cenario <- c("126",
              "245",
              "370",
@@ -81,19 +85,6 @@ tempo <- c("2021-2040",
            "2081-2100")
 
 tempo
-
-purrr::map(cenario, \(cenario){
-
-  purrr::map(tempo, \(tempo){
-
-    dir.create(paste0("./cenario_", cenario, "/", tempo),
-             recursive = TRUE)
-
-    })
-
-  })
-
-### Importando ----
 
 bioclim_futuro <- purrr::map2(cenario |> rep(each = 4),
                               tempo |> rep(times = 4),
@@ -121,25 +112,10 @@ bioclim_futuro
 
 ### Visualizando ----
 
-ggplot() +
-  tidyterra::geom_spatraster(data = `bioclim_futuro_2021-2040`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bioclim_futuro_2041-2060`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bioclim_futuro_2061-2080`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bioclim_futuro_2081-2100`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
+purrr::imap(bioclim_futuro, ~ggplot() +
+              tidyterra::geom_spatraster(data = .x[[1]]) +
+              labs(title = .y),
+            .progress = TRUE)
 
 # Exportando ----
 
