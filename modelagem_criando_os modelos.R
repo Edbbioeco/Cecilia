@@ -229,40 +229,22 @@ ensemble_presente |> terra::writeRaster("ensemble_presente.tif",
 
 ### Criando a predição e o ensemble ----
 
-predicao__ensemble_futuro <- function(variavel, nome){
+ensemble_futuro <- purrr::map(bio_futuro,
+                              \(variavel, nome){
 
-  pred_fut <- terra::predict(modelo_sdm,
-                             variavel,
-                             overwrite = TRUE)
+  terra::predict(modelo_sdm,
+                 variavel,
+                 overwrite = TRUE)
 
-  ens_fut <- sdm::ensemble(modelo_sdm,
-                           newdata = pred_fut,
-                           setting = list(method = "weighted",
-                                          stat = "AUC"))
+  },
+  .progress = TRUE) |>
+  purrr::map(~sdm::ensemble(.x,
+                            newdata = predicao_presente,
+                            setting = list(method = "weighted",
+                                           stat = "AUC")),
+             .progress = TRUE)
 
-  assign(paste0("ensemble_futuro_", nome),
-         ens_fut,
-         envir = globalenv())
-
-}
-
-variavel <- ls(pattern = "bio_futuro_") |>
-  mget(envir = globalenv())
-
-variavel
-
-nome <- c("2021-2040",
-          "2041-2060",
-          "2061-2080",
-          "2081-2100")
-
-nome
-
-purrr::map2(variavel, nome, predicao__ensemble_futuro)
-
-futuro_ensembles <- ls(pattern = "ensemble_futuro_") |>
-  mget(envir = globalenv()) |>
-  terra::rast()
+ensemble_futuro
 
 ### Visualizando ----
 
