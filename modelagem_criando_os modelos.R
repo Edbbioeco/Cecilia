@@ -113,6 +113,14 @@ ggplot() +
   tidyterra::geom_spatraster(data = bio_passado[[1]]) +
   scale_fill_viridis_c(na.value = NA)
 
+# Excluir variáveis ----
+
+## Presente ----
+
+bio_presente <- bio_presente[[-c(1:3, 5, 6, 8:10, 12:15, 17)]]
+
+bio_presente
+
 # Criando os modelos ----
 
 ## Objeto sdmdata ----
