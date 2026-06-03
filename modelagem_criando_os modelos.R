@@ -102,6 +102,9 @@ ggplot() +
 
 bio_passado <- terra::rast("./var_passado/passado.tif")
 
+names(bio_passado) <- c(paste0("Bio0", 1:9),
+                         paste0("Bio", 10:19))
+
 ### Visualizar ----
 
 bio_passado
@@ -109,106 +112,6 @@ bio_passado
 ggplot() +
   tidyterra::geom_spatraster(data = bio_passado[[1]]) +
   scale_fill_viridis_c(na.value = NA)
-
-# Recortando e excluindo as variáveis dos rasters ----
-
-## Recortando ----
-
-recortar_variaveis <- function(variavel, nome){
-
-  variavel_crop <- variavel |>
-    terra::crop(caatinga) |>
-    terra::mask(caatinga)
-
-  assign(nome,
-         variavel_crop,
-         envir = globalenv())
-
-}
-
-variavel <- ls(pattern = "bio_") |>
-  mget(envir = globalenv())
-
-variavel
-
-nome <- ls(pattern = "bio_")
-
-nome
-
-purrr::map2(variavel, nome, recortar_variaveis)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = bio_presente[[1]]) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2021-2040`[[1]]) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2041-2060`[[1]]) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2061-2080`[[1]]) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2081-2100`[[1]]) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-## Excluindo ----
-
-excluindo_variaveis <- function(variavel, nome){
-
-  variavel_exc <- variavel[[-c(1:3, 5, 6, 8:10, 12:15, 17)]]
-
-  assign(nome,
-         variavel_exc,
-         envir = globalenv())
-
-}
-
-variavel <- ls(pattern = "bio_") |>
-  mget(envir = globalenv())
-
-variavel
-
-nome <- ls(pattern = "bio_")
-
-nome
-
-purrr::map2(variavel, nome, excluindo_variaveis)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = bio_presente) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2021-2040`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2041-2060`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2061-2080`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-ggplot() +
-  tidyterra::geom_spatraster(data = `bio_futuro_2081-2100`) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
 
 # Criando os modelos ----
 
