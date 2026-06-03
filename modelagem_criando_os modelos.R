@@ -325,23 +325,13 @@ area_nicho_futuro <- purrr::map(ensemble_futuro, ~sdm::pa(.x,
 
 ### Visualizando ----
 
-area_nicho_futuro <- ls(pattern = "nicho_area_futuro") |>
-  mget(envir = globalenv()) |>
-  terra::rast()
-
 area_nicho_futuro
 
-names(area_nicho_futuro) <- c("2021-2040",
-                              "2041-2060",
-                              "2061-2080",
-                              "2081-2100")
-
-ggplot() +
-  tidyterra::geom_spatraster(data = area_nicho_futuro) +
-  scale_fill_viridis_c(na.value = NA,
-                       breaks = c(0, 1),
-                       limits = c(0, 1)) +
-  facet_wrap(~lyr)
+purrr::map(area_nicho_futuro, ~ggplot() +
+             tidyterra::geom_spatraster(data = .x) +
+             scale_fill_viridis_c(na.value = NA,
+                                  breaks = c(0, 1),
+                                  limits = c(0, 1)))
 
 ### Exportando ----
 
