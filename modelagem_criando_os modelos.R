@@ -335,5 +335,9 @@ purrr::map(area_nicho_futuro, ~ggplot() +
 
 ### Exportando ----
 
-area_nicho_futuro |> terra::writeRaster("area_nicho_futuro.tif",
-                                        overwrite = TRUE)
+purrr::map2(area_nicho_futuro,
+            area_nicho_futuro |> names(),
+            ~terra::writeRaster(.x,
+                                paste0("area_nicho_futuro_",
+                                       .y,
+                                       ".tif")))
