@@ -149,19 +149,21 @@ bioclim_presente |> terra::writeRaster("bioclim_presente_res_2.5_arcmin.tif")
 
 ## Cenário futuro ----
 
-exportar_cenarios_futuros <- function(rasters, tempo){
+purrr::pmap(list(bioclim_futuro,
+                 bioclim_futuro |>
+                   names() |>
+                   stringr::str_replace("-", "/"),
+                 bioclim_futuro |>
+                   names() |>
+                   stringr::str_remove("cenario_") |>
+                   stringr::str_c(".tif")),
+           \(raster, caminho, arquivo){
 
-  rasters |> terra::writeRaster(paste0("bioclim_futuro_res_2.5_arcmin_",
-                                      tempo,
-                                      ".tif"))
+             terra::writeRaster(raster,
+                                filename = paste0(caminho,
+                                                  "/",
+                                                  arquivo),
+                                overwrite = TRUE)
 
-}
-
-rasters <- ls(pattern = "bioclim_futuro_") |>
-  mget(envir = globalenv())
-
-rasters
-
-purrr::map2(rasters,
-            tempo,
-            exportar_cenarios_futuros)
+             },
+           .progress = TRUE)
