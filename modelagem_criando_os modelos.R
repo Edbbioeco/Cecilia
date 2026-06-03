@@ -286,6 +286,11 @@ ggplot() +
   scale_fill_viridis_c(na.value = NA,
                        limits = c(0, 1))
 
+### Exportando ----
+
+ensemble_passado |> terra::writeRaster("ensemble_passado.tif",
+                                       overwrite = TRUE)
+
 # Área de nicho ----
 
 ## Presente ----
