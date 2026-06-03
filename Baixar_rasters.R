@@ -96,7 +96,7 @@ bioclim_futuro <- purrr::map2(cenario |> rep(each = 4),
                          time = tempo,
                          var = "bioc",
                          res = 0.5,
-                         path = paste0("cenario_", cenario, "/", tempo)) |>
+                         path = paste0("./var_futuro") |>
       terra::crop(caa |>
                     sf::st_concave_hull(ratio = 0.15)) |>
       terra::mask(caa |>
@@ -125,19 +125,15 @@ bioclim_presente |> terra::writeRaster("./var_presente/presente.tif")
 
 ## Cenário futuro ----
 
-purrr::pmap(list(bioclim_futuro,
-                 bioclim_futuro |>
-                   names() |>
-                   stringr::str_replace("-", "/"),
-                 bioclim_futuro |>
-                   names() |>
-                   stringr::str_remove("cenario_") |>
-                   stringr::str_c(".tif")),
-           \(raster, caminho, arquivo){
+purrr::map2(bioclim_futuro,
+            bioclim_futuro |>
+              names() |>
+              stringr::str_remove("cenario_") |>
+              stringr::str_c(".tif"),
+           \(raster, arquivo){
 
              terra::writeRaster(raster,
-                                filename = paste0(caminho,
-                                                  "/",
+                                filename = paste0("./var_futuro/",
                                                   arquivo),
                                 overwrite = TRUE)
 
