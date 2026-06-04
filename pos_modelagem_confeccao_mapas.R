@@ -239,6 +239,52 @@ purrr::map(area_nicho_futuro, ~ggplot() +
              scale_fill_viridis_c(na.value = NA),
            .progress = TRUE)
 
+## Alterar valores dos rasters de área de nicho ----
+
+area_nicho_passado <- area_nicho_passado |>
+  dplyr::mutate(ensemble_weighted = dplyr::case_when(
+    ensemble_weighted == 0 ~ "Não área de nicho",
+    ensemble_weighted == 1 ~ "Área de nicho"))
+
+
+area_nicho_passado
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = area_nicho_passado) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_d(na.translate = FALSE, direction = -1)
+
+area_nicho_presente <- area_nicho_presente |>
+  dplyr::mutate(ensemble_weighted = dplyr::case_when(
+    ensemble_weighted == 0 ~ "Não área de nicho",
+    ensemble_weighted == 1 ~ "Área de nicho"))
+
+
+area_nicho_presente
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = area_nicho_presente) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_d(na.translate = FALSE, direction = -1)
+
+area_nicho_futuro <- purrr::map(area_nicho_futuro,
+                                ~.x |>
+                                  dplyr::mutate(
+                                    ensemble_weighted = dplyr::case_when(
+                                      ensemble_weighted == 0 ~ "Não área de nicho",
+                                      ensemble_weighted == 1 ~ "Área de nicho")),
+                                .progress = TRUE)
+
+area_nicho_futuro
+
+purrr::map(area_nich_futuro, ~ggplot() +
+             geom_sf(data = br) +
+             tidyterra::geom_spatraster(data = .x) +
+             geom_sf(data = caatinga, fill = NA) +
+             scale_fill_viridis_d(na.translate = FALSE, direction = -1))
+
 # Mapa de área de probabilidade de ocorrência para o presente ----
 
 ggplot() +
