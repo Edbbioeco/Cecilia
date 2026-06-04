@@ -75,22 +75,28 @@ ggplot() +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
 
-## Raster de probabilidade de ocorrência para o futuro ----
+## Raster do futuro ----
 
-### Importando ----
+### Ensemble ----
 
-prob_futuro <- terra::rast("ensemble_futuro.tif")
+#### Importando ----
 
-### Visualizando ----
+prob_futuro <- purrr::map(list.files(pattern = "^ensemble_futuro_"),
+                          terra::rast,
+                          .progress = TRUE) |>
+  setNames(list.files(pattern = "^ensemble_futuro_") |>
+             stringr::str_remove(".tif$"))
+
+#### Visualizando ----
 
 prob_futuro
 
-ggplot() +
-  geom_sf(data = br) +
-  tidyterra::geom_spatraster(data = prob_futuro) +
-  geom_sf(data = caatinga, fill = NA) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
+purrr::map(prob_futuro, ~ggplot() +
+             geom_sf(data = br) +
+             tidyterra::geom_spatraster(data = .x) +
+             geom_sf(data = caatinga, fill = NA) +
+             scale_fill_viridis_c(na.value = NA),
+           .progress = TRUE)
 
 ## Raster de área de nicho de ocorrência para o presente ----
 
