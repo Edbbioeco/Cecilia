@@ -279,7 +279,7 @@ area_nicho_futuro <- purrr::map(area_nicho_futuro,
 
 area_nicho_futuro
 
-purrr::map(area_nich_futuro, ~ggplot() +
+purrr::map(area_nicho_futuro, ~ggplot() +
              geom_sf(data = br) +
              tidyterra::geom_spatraster(data = .x) +
              geom_sf(data = caatinga, fill = NA) +
