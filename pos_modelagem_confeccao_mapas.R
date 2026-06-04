@@ -398,7 +398,7 @@ ggplot() +
 ggsave(filename = "mapa_probabilidade_ocorrencia_futuro_cenario126.png",
        height = 10, width = 12)
 
-### Cenário 126 ----
+### Cenário 245 ----
 
 ggplot() +
   geom_sf(data = br, aes(color = "Brasil")) +
