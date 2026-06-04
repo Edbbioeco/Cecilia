@@ -564,3 +564,76 @@ ggplot() +
 
 ggsave(filename = "mapa_area_nicho_passado.png",
        height = 10, width = 12)
+
+## Presente ----
+
+ggplot() +
+  geom_sf(data = br, aes(color = "Brasil")) +
+  tidyterra::geom_spatraster(data = area_nicho_presente) +
+  geom_sf(data = caatinga, aes(color = "Caatinga"),
+          fill = NA, linewidth = 0.75) +
+  scale_fill_viridis_d(na.translate = FALSE,
+                       direction = -1,
+                       name = "Nicho",
+                       guide = guide_legend(title.position = "top",
+                                            title.hjust = 0.5),
+                       breaks = c("Não área de nicho", "Área de nicho")) +
+  scale_color_manual(values = c("Brasil" = "black",
+                                "Caatinga" = "orangered"),
+                     name = NULL) +
+  geom_sf(data = br, linewidth = 0.75, fill = NA, color = "black") +
+  coord_sf(xlim = c(-45.07807, -35.06698),
+           ylim = c(-16.71256, -2.748381)) +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        legend.text = element_text(size = 20, color = "black"),
+        legend.title = element_text(size = 20, color = "black"),
+        legend.position = "bottom",
+        panel.border = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "mapa_area_nicho_presente.png",
+       height = 10, width = 12)
+
+### Cenário 126 ----
+
+ggplot() +
+  geom_sf(data = br, aes(color = "Brasil")) +
+  tidyterra::geom_spatraster(data = area_nicho_futuro[
+    ensemble_futuro |>
+      names() |>
+      stringr::str_detect("126")] |>
+      terra::rast() |>
+      setNames(ensemble_futuro |>
+                 names() %>%
+                 .[ensemble_futuro |>
+                     names() |>
+                     stringr::str_detect("126")] |>
+                 stringr::str_remove("ensemble_futuro_126-"))) +
+  geom_sf(data = caatinga, aes(color = "Caatinga"),
+          fill = NA, linewidth = 0.75) +
+  scale_fill_viridis_d(na.translate = FALSE,
+                       direction = -1,
+                       name = "Nicho",
+                       guide = guide_legend(title.position = "top",
+                                            title.hjust = 0.5),
+                       breaks = c("Não área de nicho", "Área de nicho")) +
+  scale_color_manual(values = c("Brasil" = "black",
+                                "Caatinga" = "orangered"),
+                     name = NULL) +
+  geom_sf(data = br, linewidth = 0.75, fill = NA, color = "black") +
+  coord_sf(xlim = c(-45.07807, -35.06698),
+           ylim = c(-16.71256, -2.748381)) +
+  facet_wrap(~lyr) +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        legend.text = element_text(size = 20, color = "black"),
+        legend.title = element_text(size = 20, color = "black"),
+        legend.position = "bottom",
+        strip.text = element_text(size = 20, color = "black"),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        panel.border = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "mapa_area_nicho_futuro_cenario126.png",
+       height = 10, width = 12)
