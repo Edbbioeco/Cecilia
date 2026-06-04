@@ -185,7 +185,8 @@ ggplot() +
 
 ensemble_futuro <- purrr::map(ensemble_futuro, ~.x |>
                                 terra::crop(caatinga) |>
-                                terra::mask(caatinga)) |>
+                                terra::mask(caatinga),
+           .progress = TRUE) |>
   setNames(ensemble_futuro |> names())
 
 ensemble_futuro
@@ -194,7 +195,8 @@ purrr::map(ensemble_futuro, ~ggplot() +
              geom_sf(data = br) +
              tidyterra::geom_spatraster(data = .x) +
              geom_sf(data = caatinga, fill = NA) +
-             scale_fill_viridis_c(na.value = NA))
+             scale_fill_viridis_c(na.value = NA),
+           .progress = TRUE)
 
 # Mapa de área de probabilidade de ocorrência para o presente ----
 
