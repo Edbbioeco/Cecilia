@@ -546,7 +546,8 @@ ggplot() +
                        direction = -1,
                        name = "Nicho",
                        guide = guide_legend(title.position = "top",
-                                            title.hjust = 0.5)) +
+                                            title.hjust = 0.5),
+                       breaks = c("Não área de nicho", "Área de nicho")) +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
                      name = NULL) +
