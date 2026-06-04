@@ -59,6 +59,22 @@ ggplot() +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
 
+### Área de nicho ----
+
+#### Importar ----
+
+area_nicho_presente <- terra::rast("area_nicho_presente.tif")
+
+#### Visualizar ----
+
+area_nicho_presente
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = area_nicho_presente) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_c(na.value = NA)
+
 ## Raster de probabilidade de ocorrência para o futuro ----
 
 ### Importando ----
