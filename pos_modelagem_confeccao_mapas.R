@@ -595,6 +595,8 @@ ggplot() +
 ggsave(filename = "mapa_area_nicho_presente.png",
        height = 10, width = 12)
 
+## Futuro ----
+
 ### Cenário 126 ----
 
 ggplot() +
