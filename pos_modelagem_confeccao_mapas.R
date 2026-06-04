@@ -198,6 +198,47 @@ purrr::map(ensemble_futuro, ~ggplot() +
              scale_fill_viridis_c(na.value = NA),
            .progress = TRUE)
 
+### Área de nicho ----
+
+area_nicho_passado <- area_nicho_passado |>
+  terra::crop(caatinga) |>
+  terra::mask(caatinga)
+
+area_nicho_passado
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = area_nicho_passado) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_c(na.value = NA)
+
+area_nicho_presente <- area_nicho_presente |>
+  terra::crop(caatinga) |>
+  terra::mask(caatinga)
+
+area_nicho_presente
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = area_nicho_presente) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_c(na.value = NA)
+
+area_nicho_futuro <- purrr::map(area_nicho_futuro, ~.x |>
+                                  terra::crop(caatinga) |>
+                                  terra::mask(caatinga),
+                                .progress = TRUE) |>
+  setNames(ensemble_futuro |> names())
+
+area_nicho_futuro
+
+purrr::map(area_nicho_futuro, ~ggplot() +
+             geom_sf(data = br) +
+             tidyterra::geom_spatraster(data = .x) +
+             geom_sf(data = caatinga, fill = NA) +
+             scale_fill_viridis_c(na.value = NA),
+           .progress = TRUE)
+
 # Mapa de área de probabilidade de ocorrência para o presente ----
 
 ggplot() +
