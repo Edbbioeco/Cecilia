@@ -98,19 +98,21 @@ purrr::map(prob_futuro, ~ggplot() +
              scale_fill_viridis_c(na.value = NA),
            .progress = TRUE)
 
-## Raster de área de nicho de ocorrência para o presente ----
+## Raster do passado ---
 
-### Importando ----
+### Ensemble -----
 
-nicho_presente <- terra::rast("area_nicho_presente.tif")
+#### Importando ----
 
-### Visualizando ----
+ensemble_passado <- terra::rast("ensemble_passado.tif")
 
-nicho_presente
+#### Visualizando ----
+
+ensemble_passado
 
 ggplot() +
   geom_sf(data = br) +
-  tidyterra::geom_spatraster(data = nicho_presente) +
+  tidyterra::geom_spatraster(data = ensemble_passado) +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
 
