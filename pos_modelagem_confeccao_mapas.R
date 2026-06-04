@@ -41,13 +41,15 @@ ggplot() +
   geom_sf(data = br) +
   geom_sf(data = caatinga)
 
-## Raster de probabilidade de ocorrência para o presente ---- 
+## Raster de ensemble ----
 
-### Importando ----
+### Presente ----
+
+#### Importando ----
 
 prob_presente <- terra::rast("ensemble_presente.tif")
 
-### Visualizando ----
+#### Visualizando ----
 
 prob_presente
 
@@ -57,7 +59,7 @@ ggplot() +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
 
-## Raster de probabilidade de ocorrência para o futuro ---- 
+## Raster de probabilidade de ocorrência para o futuro ----
 
 ### Importando ----
 
@@ -74,7 +76,7 @@ ggplot() +
   scale_fill_viridis_c(na.value = NA) +
   facet_wrap(~lyr)
 
-## Raster de área de nicho de ocorrência para o presente ---- 
+## Raster de área de nicho de ocorrência para o presente ----
 
 ### Importando ----
 
@@ -88,13 +90,13 @@ ggplot() +
   geom_sf(data = br) +
   tidyterra::geom_spatraster(data = nicho_presente) +
   geom_sf(data = caatinga, fill = NA) +
-  scale_fill_viridis_c(na.value = NA) 
+  scale_fill_viridis_c(na.value = NA)
 
 ### Tratando os rasters ----
 
 nicho_presente %<>%
-  tidyterra::mutate(ensemble_weighted = dplyr::case_when(ensemble_weighted == 0 ~ "Não área de nicho", 
-                                                         ensemble_weighted == 1 ~ "Área de nicho") |> 
+  tidyterra::mutate(ensemble_weighted = dplyr::case_when(ensemble_weighted == 0 ~ "Não área de nicho",
+                                                         ensemble_weighted == 1 ~ "Área de nicho") |>
                       forcats::fct_relevel(c("Não área de nicho",
                                              "Área de nicho"))) %<>%
   tidyterra::drop_na()
@@ -105,9 +107,9 @@ ggplot() +
   geom_sf(data = br) +
   tidyterra::geom_spatraster(data = nicho_presente) +
   geom_sf(data = caatinga, fill = NA) +
-  scale_fill_viridis_d(na.translate = FALSE) 
+  scale_fill_viridis_d(na.translate = FALSE)
 
-## Raster de área de nicho de ocorrência para o futuro ----  
+## Raster de área de nicho de ocorrência para o futuro ----
 
 ### Importando ----
 
@@ -129,7 +131,7 @@ ggplot() +
 nicho_futuro %<>%
   tidyterra::mutate(dplyr::across(dplyr::everything(),
                                   ~dplyr::case_when(.x == 0 ~ "Não área de nicho",
-                                                    .x == 1 ~ "Área de nicho") |> 
+                                                    .x == 1 ~ "Área de nicho") |>
                                     forcats::fct_relevel(c("Não área de nicho",
                                                            "Área de nicho")))) %<>%
   tidyterra::drop_na()
@@ -212,7 +214,7 @@ ggplot() +
                        na.translate = FALSE) +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
-                     name = NULL) + 
+                     name = NULL) +
   guides(color = guide_legend(order = 1),
          fill  = guide_legend(order = 2)) +
   geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
@@ -240,7 +242,7 @@ ggplot() +
                        na.translate = FALSE) +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
-                     name = NULL) + 
+                     name = NULL) +
   guides(color = guide_legend(order = 1),
          fill  = guide_legend(order = 2)) +
   geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
