@@ -285,116 +285,37 @@ purrr::map(area_nicho_futuro, ~ggplot() +
              geom_sf(data = caatinga, fill = NA) +
              scale_fill_viridis_d(na.translate = FALSE, direction = -1))
 
-# Mapa de área de probabilidade de ocorrência para o presente ----
+# Mapas de ensemble ----
+
+## Passado ----
 
 ggplot() +
-  geom_sf(data = br, linewidth = 1, aes(color = "Brasil")) +
-  tidyterra::geom_spatraster(data = prob_presente) +
-  geom_sf(data = caatinga, fill = NA, linewidth = 1, aes(color = "Caatinga")) +
+  geom_sf(data = br, aes(color = "Brasil"),
+          linewidth = 1) +
+  tidyterra::geom_spatraster(data = ensemble_passado) +
+  geom_sf(data = caatinga, aes(color = "Caatinga"),
+          fill = NA, linewidth = 0.75) +
   scale_fill_viridis_c(na.value = NA,
                        limits = c(0, 1),
                        name = "Probabilidade ocorrência",
                        guide = guide_colourbar(title.position = "top",
                                                title.hjust = 0.5,
-                                               barwidth = 20)) +
+                                               barwidth = 20,
+                                               frame.colour = "black",
+                                               ticks.colour = "black")) +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
                      name = NULL) +
   geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
+  coord_sf(xlim = c(-45.07807, -35.06698),
+           ylim = c(-16.71256, -2.748381)) +
   theme_bw() +
   theme(axis.text = element_text(size = 20, color = "black"),
         legend.text = element_text(size = 20, color = "black"),
         legend.title = element_text(size = 20, color = "black"),
         legend.position = "bottom",
-        panel.background = element_rect(color = "black", linewidth = 1)) +
+        panel.border = element_rect(color = "black", linewidth = 1)) +
   ggview::canvas(height = 10, width = 12)
 
-ggsave(filename = "mapa_probabilidade_ocorrencia_presente.png",
-       height = 10, width = 12)
-
-# Mapa de área de probabilidade de ocorrência para o futuro -----
-
-ggplot() +
-  geom_sf(data = br, linewidth = 0.5, aes(color = "Brasil")) +
-  tidyterra::geom_spatraster(data = prob_futuro) +
-  geom_sf(data = caatinga, fill = NA, linewidth = 0.5, aes(color = "Caatinga")) +
-  scale_fill_viridis_c(na.value = NA,
-                       limits = c(0, 1),
-                       name = "Probabilidade ocorrência",
-                       guide = guide_colourbar(title.position = "top",
-                                               title.hjust = 0.5,
-                                               barwidth = 20)) +
-  scale_color_manual(values = c("Brasil" = "black",
-                                "Caatinga" = "orangered"),
-                     name = NULL) +
-  geom_sf(data = br, linewidth = 0.5, fill = NA, color = "black") +
-  facet_wrap(~lyr) +
-  theme_bw() +
-  theme(axis.text = element_text(size = 20, color = "black"),
-        legend.text = element_text(size = 20, color = "black"),
-        legend.title = element_text(size = 20, color = "black"),
-        legend.position = "bottom",
-        panel.background = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(size = 20, color = "black")) +
-  ggview::canvas(height = 10, width = 12)
-
-ggsave(filename = "mapa_probabilidade_ocorrencia_futuro.png",
-       height = 10, width = 12)
-
-# Mapa de área de nicho para o presente ----
-
-ggplot() +
-  geom_sf(data = br, linewidth = 1, aes(color = "Brasil")) +
-  tidyterra::geom_spatraster(data = nicho_presente) +
-  geom_sf(data = caatinga, fill = NA, linewidth = 1, aes(color = "Caatinga")) +
-  scale_fill_viridis_d(na.value = NA,
-                       name = NULL,
-                       guide = guide_legend(title.position = "top",
-                                            title.hjust = 0.5),
-                       na.translate = FALSE) +
-  scale_color_manual(values = c("Brasil" = "black",
-                                "Caatinga" = "orangered"),
-                     name = NULL) +
-  guides(color = guide_legend(order = 1),
-         fill  = guide_legend(order = 2)) +
-  geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
-  theme_bw() +
-  theme(axis.text = element_text(size = 20, color = "black"),
-        legend.text = element_text(size = 20, color = "black"),
-        legend.title = element_text(size = 20, color = "black"),
-        legend.position = "bottom",
-        panel.background = element_rect(color = "black", linewidth = 1)) +
-  ggview::canvas(height = 10, width = 12)
-
-ggsave(filename = "mapa_area_nicho_ocorrencia_presente.png",
-       height = 10, width = 12)
-
-# Mapa de área de nicho para o futuro -----
-
-ggplot() +
-  geom_sf(data = br, linewidth = 1, aes(color = "Brasil")) +
-  tidyterra::geom_spatraster(data = nicho_futuro) +
-  geom_sf(data = caatinga, fill = NA, linewidth = 1, aes(color = "Caatinga")) +
-  scale_fill_viridis_d(na.value = NA,
-                       name = NULL,
-                       guide = guide_legend(title.position = "top",
-                                            title.hjust = 0.5),
-                       na.translate = FALSE) +
-  scale_color_manual(values = c("Brasil" = "black",
-                                "Caatinga" = "orangered"),
-                     name = NULL) +
-  guides(color = guide_legend(order = 1),
-         fill  = guide_legend(order = 2)) +
-  geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
-  facet_wrap(~lyr) +
-  theme_bw() +
-  theme(axis.text = element_text(size = 20, color = "black"),
-        legend.text = element_text(size = 20, color = "black"),
-        legend.title = element_text(size = 20, color = "black"),
-        legend.position = "bottom",
-        panel.background = element_rect(color = "black", linewidth = 1),
-        strip.text = element_text(size = 20, color = "black")) +
-  ggview::canvas(height = 10, width = 12)
-
-ggsave(filename = "mapa_area_nicho_ocorrencia_futuro.png",
+ggsave(filename = "mapa_probabilidade_ocorrencia_passado.png",
        height = 10, width = 12)
