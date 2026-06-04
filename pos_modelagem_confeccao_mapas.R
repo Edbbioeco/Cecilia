@@ -290,8 +290,7 @@ purrr::map(area_nicho_futuro, ~ggplot() +
 ## Passado ----
 
 ggplot() +
-  geom_sf(data = br, aes(color = "Brasil"),
-          linewidth = 1) +
+  geom_sf(data = br, aes(color = "Brasil")) +
   tidyterra::geom_spatraster(data = ensemble_passado) +
   geom_sf(data = caatinga, aes(color = "Caatinga"),
           fill = NA, linewidth = 0.75) +
@@ -306,7 +305,7 @@ ggplot() +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
                      name = NULL) +
-  geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
+  geom_sf(data = br, linewidth = 0.75, fill = NA, color = "black") +
   coord_sf(xlim = c(-45.07807, -35.06698),
            ylim = c(-16.71256, -2.748381)) +
   theme_bw() +
@@ -323,8 +322,7 @@ ggsave(filename = "mapa_probabilidade_ocorrencia_passado.png",
 ## Presente ----
 
 ggplot() +
-  geom_sf(data = br, aes(color = "Brasil"),
-          linewidth = 1) +
+  geom_sf(data = br, aes(color = "Brasil")) +
   tidyterra::geom_spatraster(data = ensemble_presente) +
   geom_sf(data = caatinga, aes(color = "Caatinga"),
           fill = NA, linewidth = 0.75) +
@@ -339,7 +337,7 @@ ggplot() +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
                      name = NULL) +
-  geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
+  geom_sf(data = br, linewidth = 0.75, fill = NA, color = "black") +
   coord_sf(xlim = c(-45.07807, -35.06698),
            ylim = c(-16.71256, -2.748381)) +
   theme_bw() +
@@ -358,8 +356,7 @@ ggsave(filename = "mapa_probabilidade_ocorrencia_presente.png",
 ### Cenário 126 ----
 
 ggplot() +
-  geom_sf(data = br, aes(color = "Brasil"),
-          linewidth = 1) +
+  geom_sf(data = br, aes(color = "Brasil")) +
   tidyterra::geom_spatraster(data = ensemble_futuro[
     ensemble_futuro |>
       names() |>
@@ -384,7 +381,7 @@ ggplot() +
   scale_color_manual(values = c("Brasil" = "black",
                                 "Caatinga" = "orangered"),
                      name = NULL) +
-  geom_sf(data = br, linewidth = 1, fill = NA, color = "black") +
+  geom_sf(data = br, linewidth = 0.75, fill = NA, color = "black") +
   coord_sf(xlim = c(-45.07807, -35.06698),
            ylim = c(-16.71256, -2.748381)) +
   facet_wrap(~lyr) +
