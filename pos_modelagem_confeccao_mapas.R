@@ -47,15 +47,15 @@ ggplot() +
 
 #### Importando ----
 
-prob_presente <- terra::rast("ensemble_presente.tif")
+ensemble_presente <- terra::rast("ensemble_presente.tif")
 
 #### Visualizando ----
 
-prob_presente
+ensemble_presente
 
 ggplot() +
   geom_sf(data = br) +
-  tidyterra::geom_spatraster(data = prob_presente) +
+  tidyterra::geom_spatraster(data = ensemblepresente) +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
 
@@ -81,7 +81,7 @@ ggplot() +
 
 #### Importando ----
 
-prob_futuro <- purrr::map(list.files(pattern = "^ensemble_futuro_"),
+ensemble_futuro <- purrr::map(list.files(pattern = "^ensemble_futuro_"),
                           terra::rast,
                           .progress = TRUE) |>
   setNames(list.files(pattern = "^ensemble_futuro_") |>
@@ -89,9 +89,9 @@ prob_futuro <- purrr::map(list.files(pattern = "^ensemble_futuro_"),
 
 #### Visualizando ----
 
-prob_futuro
+ensemble_futuro
 
-purrr::map(prob_futuro, ~ggplot() +
+purrr::map(ensemble_futuro, ~ggplot() +
              geom_sf(data = br) +
              tidyterra::geom_spatraster(data = .x) +
              geom_sf(data = caatinga, fill = NA) +
@@ -152,59 +152,6 @@ ggplot() +
   tidyterra::geom_spatraster(data = area_nicho_passado) +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
-
-### Tratando os rasters ----
-
-nicho_presente %<>%
-  tidyterra::mutate(ensemble_weighted = dplyr::case_when(ensemble_weighted == 0 ~ "Não área de nicho",
-                                                         ensemble_weighted == 1 ~ "Área de nicho") |>
-                      forcats::fct_relevel(c("Não área de nicho",
-                                             "Área de nicho"))) %<>%
-  tidyterra::drop_na()
-
-nicho_presente
-
-ggplot() +
-  geom_sf(data = br) +
-  tidyterra::geom_spatraster(data = nicho_presente) +
-  geom_sf(data = caatinga, fill = NA) +
-  scale_fill_viridis_d(na.translate = FALSE)
-
-## Raster de área de nicho de ocorrência para o futuro ----
-
-### Importando ----
-
-nicho_futuro <- terra::rast("area_nicho_futuro.tif")
-
-### Visualizando ----
-
-nicho_futuro
-
-ggplot() +
-  geom_sf(data = br) +
-  tidyterra::geom_spatraster(data = nicho_futuro) +
-  geom_sf(data = caatinga, fill = NA) +
-  scale_fill_viridis_c(na.value = NA) +
-  facet_wrap(~lyr)
-
-### Tratando os rasters ----
-
-nicho_futuro %<>%
-  tidyterra::mutate(dplyr::across(dplyr::everything(),
-                                  ~dplyr::case_when(.x == 0 ~ "Não área de nicho",
-                                                    .x == 1 ~ "Área de nicho") |>
-                                    forcats::fct_relevel(c("Não área de nicho",
-                                                           "Área de nicho")))) %<>%
-  tidyterra::drop_na()
-
-nicho_futuro
-
-ggplot() +
-  geom_sf(data = br) +
-  tidyterra::geom_spatraster(data = nicho_futuro) +
-  geom_sf(data = caatinga, fill = NA) +
-  scale_fill_viridis_d(na.translate = FALSE) +
-  facet_wrap(~lyr)
 
 # Mapa de área de probabilidade de ocorrência para o presente ----
 
