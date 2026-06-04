@@ -153,6 +153,49 @@ ggplot() +
   geom_sf(data = caatinga, fill = NA) +
   scale_fill_viridis_c(na.value = NA)
 
+# Tratar rasters ----
+
+## Recortar os raster para a Caatinga ----
+
+### Ensembles ----
+
+ensemble_passado <- ensemble_passado |>
+  terra::crop(caatinga) |>
+  terra::mask(caatinga)
+
+ensemble_passado
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = ensemble_passado) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_c(na.value = NA)
+
+ensemble_presente <- ensemble_presente |>
+  terra::crop(caatinga) |>
+  terra::mask(caatinga)
+
+ensemble_presente
+
+ggplot() +
+  geom_sf(data = br) +
+  tidyterra::geom_spatraster(data = ensemble_presente) +
+  geom_sf(data = caatinga, fill = NA) +
+  scale_fill_viridis_c(na.value = NA)
+
+ensemble_futuro <- purrr::map(ensemble_futuro, ~.x |>
+                                terra::crop(caatinga) |>
+                                terra::mask(caatinga)) |>
+  setNames(ensemble_futuro |> names())
+
+ensemble_futuro
+
+purrr::map(ensemble_futuro, ~ggplot() +
+             geom_sf(data = br) +
+             tidyterra::geom_spatraster(data = .x) +
+             geom_sf(data = caatinga, fill = NA) +
+             scale_fill_viridis_c(na.value = NA))
+
 # Mapa de área de probabilidade de ocorrência para o presente ----
 
 ggplot() +
