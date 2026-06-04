@@ -98,6 +98,27 @@ purrr::map(prob_futuro, ~ggplot() +
              scale_fill_viridis_c(na.value = NA),
            .progress = TRUE)
 
+### Área de nicho ----
+
+#### Importar ----
+
+area_nicho_futuro <- purrr::map(list.files(pattern = "^area_nicho_futuro_"),
+                                terra::rast,
+                                .progress = TRUE) |>
+  setNames(list.files(pattern = "^area_nicho_futuro_") |>
+             stringr::str_remove(".tif$"))
+
+#### Visualizar ----
+
+area_nicho_futuro
+
+purrr::map(area_nicho_futuro, ~ggplot() +
+             geom_sf(data = br) +
+             tidyterra::geom_spatraster(data = .x) +
+             geom_sf(data = caatinga, fill = NA) +
+             scale_fill_viridis_c(na.value = NA),
+           .progress = TRUE)
+
 ## Raster do passado ---
 
 ### Ensemble -----
