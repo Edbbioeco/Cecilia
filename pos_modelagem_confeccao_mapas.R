@@ -41,9 +41,9 @@ ggplot() +
   geom_sf(data = br) +
   geom_sf(data = caatinga)
 
-## Raster de ensemble ----
+## Raster do Presente ----
 
-### Presente ----
+### Ensemble ----
 
 #### Importando ----
 
