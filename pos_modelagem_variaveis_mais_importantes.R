@@ -173,9 +173,15 @@ var_resposta
 ## Gráfico ----
 
 var_resposta |>
-  ggplot(aes(Gradiente, `Resposta do modelo`, color = modelo)) +
-  geom_line(alpha = 0.5) +
-  facet_wrap(~Variavel, scales = "free") +
+  dplyr::summarise(media = mean(`Resposta do modelo`),
+                   minimo = min(`Resposta do modelo`),
+                   maximo = max(`Resposta do modelo`),
+                   .by = c(Variavel, Gradiente)) |>
+  dplyr::rename("Resposta do modelo" = media) |>
+  ggplot(aes(Gradiente, `Resposta do modelo`)) +
+  geom_ribbon(aes(ymin = minimo, ymax = maximo), alpha = 0.5, color = NA) +
+  geom_line(color = "blue", linewidth = 1) +
+  facet_wrap(~Variavel, scales = "free_x") +
   scale_color_manual(values = rep("black", 20)) +
   theme_bw() +
   theme(axis.text = element_text(size = 20, color = "black"),
@@ -186,3 +192,6 @@ var_resposta |>
         panel.border = element_rect(color = "black", linewidth = 1),
         panel.grid = element_line(color = "gray", linetype = "dashed")) +
   ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "curva_resposta.png",
+       height = 10, width = 12)
