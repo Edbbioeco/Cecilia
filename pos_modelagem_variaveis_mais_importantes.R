@@ -114,7 +114,17 @@ ggsave(filename = "curva_roc.png",
 
 # Importância das variáveis ----
 
-modelo_sdm |> sdm::getVarImp() |> plot() + theme_bw()
+## Extrair dados ----
+
+var_imp <- modelo_sdm |>
+  sdm::getVarImp() %>%
+  .@varImportanceMean |>
+  purrr::imap(~.x |>
+                dplyr::rename(`Importância relativa` = 2) |>
+                dplyr::mutate(tipo = .y)) |>
+  dplyr::bind_rows()
+
+var_imp
 
 # Curva de resposta ----
 
