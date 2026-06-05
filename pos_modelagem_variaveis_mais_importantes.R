@@ -43,6 +43,11 @@ tabela_auc_tss_flex <- modelo_sdm |>
 
 tabela_auc_tss_flex
 
+### Exportar tabela ----
+
+tabela_auc_tss_flex |>
+  flextable::save_as_docx(path = "tabela_auc_tsss.docx")
+
 # Curva ROC ----
 
 modelo_sdm |> sdm::roc()
