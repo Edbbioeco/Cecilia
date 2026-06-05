@@ -105,7 +105,8 @@ ggplot(data = dados_roc,
         legend.position = "one",
         strip.text = element_text(size = 20, color = "black"),
         strip.background = element_rect(color = "black", linewidth = 1),
-        panel.border = element_rect(color = "black", linewidth = 1)) +
+        panel.border = element_rect(color = "black", linewidth = 1),
+        panel.grid = element_line(color = "gray", linetype = "dashed")) +
   ggview::canvas(height = 10, width = 12)
 
 ggsave(filename = "curva_roc.png",
