@@ -161,11 +161,11 @@ var_resposta <- modelo_sdm |>
   purrr::imap(~.x |>
                 dplyr::rename("Gradiente" = 1) |>
                 dplyr::mutate(Variavel = .y,
-                              .before = Variavel),
+                              .before = Gradiente),
               .progress = TRUE) |>
   dplyr::bind_rows() |>
   tidyr::pivot_longer(cols = 2:21,
-                      names_to = "variavel",
+                      names_to = "modelo",
                       values_to = "Resposta do modelo")
 
 var_resposta
