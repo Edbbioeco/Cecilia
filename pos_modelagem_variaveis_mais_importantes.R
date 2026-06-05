@@ -180,7 +180,7 @@ var_resposta
 var_resposta |>
   ggplot(aes(Gradiente, `Resposta do modelo`)) +
   geom_ribbon(aes(ymin = minimo, ymax = maximo), alpha = 0.5, color = NA) +
-  geom_line(color = "blue", linewidth = 1) +
+  geom_line(color = "black", linewidth = 1) +
   facet_wrap(~Variavel, scales = "free_x") +
   scale_color_manual(values = rep("black", 20)) +
   theme_bw() +
