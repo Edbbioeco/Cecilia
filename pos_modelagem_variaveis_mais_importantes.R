@@ -52,7 +52,28 @@ tabela_auc_tss_flex |>
 
 # Curva ROC ----
 
-modelo_sdm |> sdm::roc()
+## Criando multiplas curvas ROC ----
+
+dados_roc <- purrr::map(c("gam", "glm", "maxent", "maxlike"), \(modelo){
+
+  purrr::map(1:5, \(id){
+
+    modelo_sdm |>
+      sdm::getRoc(method = modelo, p = id) |>
+      as.data.frame() |>
+      dplyr::mutate(algoritimo = modelo,
+                    id = id |> as.character()) |>
+      dplyr::arrange(sensitivity) |>
+      dplyr::mutate(uni = 1:dplyr::n())
+
+    })
+
+  },
+  .progress = TRUE) |>
+  dplyr::bind_rows() |>
+  dplyr::rename("1-Especificidade" = 1)
+
+dados_roc
 
 # Importância das variáveis ----
 
