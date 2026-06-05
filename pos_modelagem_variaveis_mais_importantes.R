@@ -153,4 +153,19 @@ ggsave(filename = "importancia_variaveis.png",
 
 # Curva de resposta ----
 
-modelo_sdm |> sdm::getResponseCurve() |> plot() + theme_bw()
+## Extrair valores ----
+
+var_resposta <- modelo_sdm |>
+  sdm::getResponseCurve() |>
+  (\(rc) rc@response)() |>
+  purrr::imap(~.x |>
+                dplyr::rename("Gradiente" = 1) |>
+                dplyr::mutate(Variavel = .y,
+                              .before = Variavel),
+              .progress = TRUE) |>
+  dplyr::bind_rows() |>
+  tidyr::pivot_longer(cols = 2:21,
+                      names_to = "variavel",
+                      values_to = "Resposta do modelo")
+
+var_resposta
