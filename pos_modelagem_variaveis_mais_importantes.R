@@ -75,6 +75,18 @@ dados_roc <- purrr::map(c("gam", "glm", "maxent", "maxlike"), \(modelo){
 
 dados_roc
 
+## Criar modelo nulo ----
+
+modelo_nulo_roc <- data.frame(`1-Especificidade` = seq(0, 1,
+                                                       length.out = dados_roc$un |>
+                                                         max()),
+                              sensibilidade = seq(0, 1,
+                                                  length.out = dados_roc$un |>
+                                                    max())) |>
+  dplyr::rename("1-Especificidade" = 1)
+
+modelo_nulo_roc
+
 # Importância das variáveis ----
 
 modelo_sdm |> sdm::getVarImp() |> plot() + theme_bw()
