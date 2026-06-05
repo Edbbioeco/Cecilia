@@ -87,6 +87,30 @@ modelo_nulo_roc <- data.frame(`1-Especificidade` = seq(0, 1,
 
 modelo_nulo_roc
 
+### Gráfico ----
+
+ggplot(data = dados_roc,
+       aes(`1-Especificidade`, sensitivity, color = id)) +
+  geom_line() +
+  scale_color_manual(values = rep("black", 5)) +
+  geom_line(data = modelo_nulo_roc, aes(x = `1-Especificidade`,
+                                        y = sensibilidade),
+            color = "blue", linetype = "dashed", linewidth = 1,
+            inherit.aes = FALSE) +
+  facet_wrap(~algoritimo) +
+  labs(y = "Sensividade") +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        axis.title = element_text(size = 20, color = "black"),
+        legend.position = "one",
+        strip.text = element_text(size = 20, color = "black"),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        panel.border = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "curva_roc.png",
+       height = 10, width = 12)
+
 # Importância das variáveis ----
 
 modelo_sdm |> sdm::getVarImp() |> plot() + theme_bw()
