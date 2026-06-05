@@ -126,6 +126,30 @@ var_imp <- modelo_sdm |>
 
 var_imp
 
+## Gráfico ----
+
+var_imp |>
+  ggplot(aes(`Importância relativa`, variables)) +
+  geom_errorbar(aes(xmin = lower,
+                    xmax = upper,
+                    y = variables),
+                width = 0.25, linewidth = 1,
+                color = "blue") +
+  geom_point(color = "black", stroke = 1, size = 5) +
+  facet_wrap(~tipo, scales = "free_x") +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        axis.title = element_text(size = 20, color = "black"),
+        legend.position = "one",
+        strip.text = element_text(size = 20, color = "black"),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        panel.grid = element_line(color = "gray", linetype = "dashed")) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "importancia_variaveis.png",
+       height = 10, width = 12)
+
 # Curva de resposta ----
 
 modelo_sdm |> sdm::getResponseCurve() |> plot() + theme_bw()
