@@ -4,6 +4,8 @@ library(sdm)
 
 library(tidyverse)
 
+library(flextable)
+
 library(ggview)
 
 # Dados ----
