@@ -166,18 +166,18 @@ var_resposta <- modelo_sdm |>
   dplyr::bind_rows() |>
   tidyr::pivot_longer(cols = 3:22,
                       names_to = "modelo",
-                      values_to = "Resposta do modelo")
+                      values_to = "Resposta do modelo") |>
+  dplyr::summarise(media = mean(`Resposta do modelo`),
+                   minimo = min(`Resposta do modelo`),
+                   maximo = max(`Resposta do modelo`),
+                   .by = c(Variavel, Gradiente)) |>
+  dplyr::rename("Resposta do modelo" = media)
 
 var_resposta
 
 ## Gráfico ----
 
 var_resposta |>
-  dplyr::summarise(media = mean(`Resposta do modelo`),
-                   minimo = min(`Resposta do modelo`),
-                   maximo = max(`Resposta do modelo`),
-                   .by = c(Variavel, Gradiente)) |>
-  dplyr::rename("Resposta do modelo" = media) |>
   ggplot(aes(Gradiente, `Resposta do modelo`)) +
   geom_ribbon(aes(ymin = minimo, ymax = maximo), alpha = 0.5, color = NA) +
   geom_line(color = "blue", linewidth = 1) +
