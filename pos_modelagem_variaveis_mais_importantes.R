@@ -169,3 +169,19 @@ var_resposta <- modelo_sdm |>
                       values_to = "Resposta do modelo")
 
 var_resposta
+
+## Gráfico ----
+
+var_resposta |>
+  ggplot(aes(Gradiente, `Resposta do modelo`, )) +
+  geom_line(alpha = 0.5) +
+  facet_wrap(~Variavel, scales = "free") +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        axis.title = element_text(size = 20, color = "black"),
+        legend.position = "one",
+        strip.text = element_text(size = 20, color = "black"),
+        strip.background = element_rect(color = "black", linewidth = 1),
+        panel.border = element_rect(color = "black", linewidth = 1),
+        panel.grid = element_line(color = "gray", linetype = "dashed")) +
+  ggview::canvas(height = 10, width = 12)
