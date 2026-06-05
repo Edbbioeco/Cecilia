@@ -136,6 +136,7 @@ var_imp |>
                 width = 0.25, linewidth = 1,
                 color = "blue") +
   geom_point(color = "black", stroke = 1, size = 5) +
+  labs(y = "Variável") +
   facet_wrap(~tipo, scales = "free_x") +
   theme_bw() +
   theme(axis.text = element_text(size = 20, color = "black"),
