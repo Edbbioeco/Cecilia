@@ -164,7 +164,7 @@ var_resposta <- modelo_sdm |>
                               .before = Gradiente),
               .progress = TRUE) |>
   dplyr::bind_rows() |>
-  tidyr::pivot_longer(cols = 2:21,
+  tidyr::pivot_longer(cols = 3:22,
                       names_to = "modelo",
                       values_to = "Resposta do modelo")
 
@@ -173,9 +173,10 @@ var_resposta
 ## Gráfico ----
 
 var_resposta |>
-  ggplot(aes(Gradiente, `Resposta do modelo`, )) +
+  ggplot(aes(Gradiente, `Resposta do modelo`, color = modelo)) +
   geom_line(alpha = 0.5) +
   facet_wrap(~Variavel, scales = "free") +
+  scale_color_manual(values = rep("black", 20)) +
   theme_bw() +
   theme(axis.text = element_text(size = 20, color = "black"),
         axis.title = element_text(size = 20, color = "black"),
