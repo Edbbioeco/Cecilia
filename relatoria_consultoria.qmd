@@ -1,9 +1,9 @@
 ---
 title: ""
-csl: associacao-brasileira-de-normas-tecnicas.csl
+csl: C:/Users/LENOVO/OneDrive/Documentos/bib/associacao-brasileira-de-normas-tecnicas.csl
 link-citations: false
 link-bibliography: false
-bibliography: bib_unido.bib
+bibliography: C:/Users/LENOVO/OneDrive/Documentos/bib/export.bib
 format: 
   docx:
     reference-doc: modelo_referencia.docx
@@ -15,11 +15,13 @@ execute:
 
 # Material e Métodos
 
-## Área de estudo
-
-## Coleta de dados de ocorrência
+## Área de estudo e coleta de dados de ocorrência
 
 ## Coleta de dados ambientais
+
+Os dados ambientais dos cenários climáticos passados foram obtidos atrravés da plataforma Chelsea [@DirkNikolaus2017], usando o pacote de linguagem R rpaleoclim [@Roe2026], usanod as 19 variáveis bioclimáticas para cenários climáticos passados para uma resolução de 0,5 arco-minutos. Os dados presentes foram obtidos através da plataforma WorldClim [@Fick2017], utilizando o pacote de linguagem R geodata [@Hijmans2024], utilizando as 19 variáveis bioclimáticas e para uma resoluão 0,5 arco-minutos. para os cenários climáticos futuros, foi usado o modelo ACCESS-CM2 [@CSIRO2019], utilizando os cenários mais otimista (126), menos otimista (245), pessimista (370) e mais pessimista (585), através da plataforma Worldclim e utilizandio o pacote de linguagem R geodata, para uma resolução de 0,5 arco-minutos.
+
+Todas as variáveis bioclimáticas foram posteriormente recortadas para um shapefile da área da Caatinga. Utilizando os registros de ocorrência, foram extraídos os valores para cada uma das variáveis ambientais, usando o pacote de linguagem R terra [@Hijmans2024].
 
 ## Análise de dados
 
