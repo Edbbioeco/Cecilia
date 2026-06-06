@@ -72,3 +72,20 @@ areas_nicho <- purrr::map_dbl(rasters,
                               .progress = TRUE)
 
 areas_nicho
+
+## Data frame dos valores ----
+
+area_df <- tibble::tibble(Cenário = c("Passado",
+                                      "Presente",
+                                      rep(c("126", "245", "370", "585"),
+                                          each = 4)),
+                          tempo = c(NA,
+                                    NA,
+                                    rep(c("2021-2040",
+                                          "2041-2060",
+                                          "2061-2080",
+                                          "2081-2100"),
+                                        times = 4)),
+                          `Área (km²)` = areas_nicho)
+
+area_df
