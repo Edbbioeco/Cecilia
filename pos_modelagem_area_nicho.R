@@ -45,3 +45,17 @@ purrr::map(rasters, ~ggplot() +
              tidyterra::geom_spatraster(data = .x) +
              scale_fill_viridis_c(na.value = "transparent"),
            .progress = TRUE)
+
+# Área de nicho ----
+
+## Recortar rasters ----
+
+rasters <- purrr::map(rasters, purrr::in_parallel(~.x |>
+                                                    terra::crop(caa) |>
+                                                    terra::mask(caa)),
+                      .progress = TRUE)
+
+purrr::map(rasters, ~ggplot() +
+             tidyterra::geom_spatraster(data = .x) +
+             scale_fill_viridis_c(na.value = "transparent"),
+           .progress = TRUE)
