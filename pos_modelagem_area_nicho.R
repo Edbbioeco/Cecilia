@@ -89,3 +89,42 @@ area_df <- tibble::tibble(Cenário = c("Passado",
                           `Área (km²)` = areas_nicho)
 
 area_df
+
+## Gráfico ----
+
+area_df |>
+  tidyr::drop_na() |>
+  ggplot(aes(Tempo, `Área (km²)`, color = Cenário, fill = Cenário, group = Cenário)) +
+  geom_line(linewidth = 2) +
+  geom_point(shape = 21, color = "black", size = 5, stroke = 1) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  guides(color = guide_legend(title.position = "top", title.hjust = 0.5),
+         fill  = guide_legend(title.position = "top", title.hjust = 0.5)) +
+  geom_hline(yintercept = areas_nicho[[1]],
+             color = "royalblue4",
+             linewidth = 2,
+             linetype = "dashed") +
+  geom_label(aes("2021-2040", areas_nicho[[1]], label = "Passado"),
+             color = "black",
+             fill = "royalblue",
+             size = 7.5) +
+  geom_hline(yintercept = areas_nicho[[2]],
+             color = "tomato4",
+             linewidth = 2,
+             linetype = "dashed") +
+  geom_label(aes("2021-2040", areas_nicho[[2]], label = "Presente"),
+             color = "black",
+             fill = "tomato",
+             size = 7.5) +
+  theme_bw() +
+  theme(axis.text = element_text(size = 20, color = "black"),
+        axis.title = element_text(size = 20, color = "black"),
+        legend.text = element_text(size = 20, color = "black"),
+        legend.title = element_text(size = 20, color = "black"),
+        legend.position = "bottom",
+        panel.border = element_rect(color = "black", linewidth = 1)) +
+  ggview::canvas(height = 10, width = 12)
+
+ggsave(filename = "areas_nichos_comparacao.png",
+       height = 10, width = 12)
