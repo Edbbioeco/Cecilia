@@ -59,3 +59,16 @@ purrr::map(rasters, ~ggplot() +
              tidyterra::geom_spatraster(data = .x) +
              scale_fill_viridis_c(na.value = "transparent"),
            .progress = TRUE)
+
+## Calcular área de nicho ----
+
+areas_nicho <- purrr::map_dbl(rasters,
+                              purrr::in_parallel(~.x |>
+                                                   tidyterra::filter(
+                                                     ensemble_weighted == 1) |>
+                                                   terra::as.polygons() |>
+                                                   sf::st_as_sf(crs = 4674) |>
+                                                   sf::st_area() / 1e6),
+                              .progress = TRUE)
+
+areas_nicho
