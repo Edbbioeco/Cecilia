@@ -128,3 +128,23 @@ area_df |>
 
 ggsave(filename = "areas_nichos_comparacao.png",
        height = 10, width = 12)
+
+## Tabela flextabkle ----
+
+### Criar ----
+
+tabela_flex <- area_df |>
+  tidyr::unite(col = "Cenário-Tempo",
+               sep = " ",
+               1:2) |>
+  dplyr::mutate(`Cenário-Tempo` = `Cenário-Tempo` |>
+                  stringr::str_remove("NA")) |>
+  flextable::flextable() |>
+  flextable::align(align = "center", part = "all") |>
+  flextable::width(width = 1.25)
+
+tabela_flex
+
+### Salvar tabela ----
+
+tabela_flex |> flextable::save_as_docx(path = "tabela_valores_area_nicho.docx")
