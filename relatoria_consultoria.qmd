@@ -1,0 +1,28 @@
+---
+title: ""
+csl: associacao-brasileira-de-normas-tecnicas.csl
+link-citations: false
+link-bibliography: false
+bibliography: bib_unido.bib
+format: 
+  docx:
+    reference-doc: modelo_referencia.docx
+editor: visual
+execute: 
+  echo: false
+  warning: false
+---
+
+# Material e Métodos
+
+## Área de estudo
+
+## Coleta de dados de ocorrência
+
+## Coleta de dados ambientais
+
+## Análise de dados
+
+# Recomendações
+
+# Referências
