@@ -21,7 +21,7 @@ gert::git_push(remote = "origin")
 
 # Pullando ----
 
-gert::git_pull()
+gert::git_pull(remote = "origin")
 
 # Resetando ----
 
