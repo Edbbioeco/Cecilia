@@ -79,7 +79,7 @@ dados_roc
 ## Criar modelo nulo ----
 
 modelo_nulo_roc <- data.frame(`1-Especificidade` = seq(0, 1,
-                                                       length.out = dados_roc$uni |>
+                                                       length.out = dados_roc$un |>
                                                          max()),
                               sensibilidade = seq(0, 1,
                                                   length.out = dados_roc$uni |>
