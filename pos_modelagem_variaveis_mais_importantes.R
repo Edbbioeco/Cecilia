@@ -63,8 +63,7 @@ dados_roc <- purrr::map(c("gam", "glm", "maxent", "maxlike"), \(modelo){
       as.data.frame() |>
       dplyr::mutate(algoritimo = modelo,
                     id = id |> as.character()) |>
-      dplyr::arrange(sensitivity) |>
-      dplyr::mutate(uni = 1:dplyr::n())
+      dplyr::arrange(sensitivity)
 
     })
 
