@@ -2,9 +2,14 @@
 
 library(gert)
 
+# Status ----
+
+gert::git_status() |>
+  as.data.frame()
+
 # Adiconar arquivo ----
 
-gert::git_add(list.files(pattern = "git_commands"))
+gert::git_add(files = "git_commands.R")
 
 # Commitando ----
 
@@ -12,7 +17,7 @@ gert::git_commit("Script para comandos de git")
 
 # Pusshando ----
 
-gert::git_push(remote = "origin", force = TRUE)
+gert::git_push(remote = "origin")
 
 # Pullando ----
 
@@ -20,6 +25,6 @@ gert::git_pull()
 
 # Resetando ----
 
-gert::git_reset_soft(ref = "HEAD~1")
+gert::git_reset_mixed()
 
-gert::git_reset_hard(ref = "HEAD~1")
+gert::git_reset_soft(ref = "HEAD~1")
