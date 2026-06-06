@@ -10,6 +10,8 @@ library(tidyterra)
 
 library(ggview)
 
+library(flextable)
+
 # Dados ----
 
 ## Shapefile da caatinga ----
