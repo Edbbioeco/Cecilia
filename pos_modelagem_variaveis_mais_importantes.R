@@ -54,33 +54,35 @@ tabela_auc_tss_flex |>
 
 ## Criando multiplas curvas ROC ----
 
-dados_roc <- purrr::map(c("gam", "glm", "maxent", "maxlike"), \(modelo){
+dados_roc <- purrr::map(c("gam", "glm", "maxent", "maxlike"),
+                        purrr::in_parallel(\(modelo){
 
-  purrr::map(1:5, \(id){
+                          purrr::map(1:5, \(id){
 
-    modelo_sdm |>
-      sdm::getRoc(method = modelo, p = id) |>
-      as.data.frame() |>
-      dplyr::mutate(algoritimo = modelo,
-                    id = id |> as.character()) |>
-      dplyr::arrange(sensitivity)
+                            modelo_sdm |>
+                              sdm::getRoc(method = modelo, p = id) |>
+                              as.data.frame() |>
+                              dplyr::mutate(algoritimo = modelo,
+                                            id = id |> as.character(),
+                                            uni = 1:dplyr::n()) |>
+                              dplyr::arrange(sensitivity)
 
-    })
+                            })
 
-  },
-  .progress = TRUE) |>
-  dplyr::bind_rows() |>
-  dplyr::rename("1-Especificidade" = 1)
+                          }),
+                        .progress = TRUE) |>
+                        dplyr::bind_rows() |>
+                        dplyr::rename("1-Especificidade" = 1)
 
 dados_roc
 
 ## Criar modelo nulo ----
 
 modelo_nulo_roc <- data.frame(`1-Especificidade` = seq(0, 1,
-                                                       length.out = dados_roc$un |>
+                                                       length.out = dados_roc$uni |>
                                                          max()),
                               sensibilidade = seq(0, 1,
-                                                  length.out = dados_roc$un |>
+                                                  length.out = dados_roc$uni |>
                                                     max())) |>
   dplyr::rename("1-Especificidade" = 1)
 
