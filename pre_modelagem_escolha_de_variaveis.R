@@ -115,6 +115,9 @@ multicol |>
         legend.title = element_text(size = 15, color = "black")) +
   ggview::canvas(height = 10, width = 12)
 
+ggsave(filename = "multicolinearidade.png",
+       height = 10, width = 12)
+
 ## Variáveis para excluir ----
 
 # Bio01, Bio02, Bio03, Bio05, Bio06, Bio08, Bio09, Bio10, Bio12, Bio13, Bio14, Bio15, Bio17
