@@ -38,6 +38,10 @@ Foi criado um modelo usando os dados do cenário presente. O modelo foi contruí
 
 O modelo foi avaliação quanto ao seu AUC e TSS. Pada algorítimo e suas repetições foi avaliado quanto à curva ROC [@Manel2001]. Cada variável foi avaliada quanto à sua importância para o modelo e a sua curva de resposta em funçãodo modelo, utilizando o critério de Jackknife [@Shcheglovitova2013]. Todas estas análises foram feitas utilizando o pacote sdm.
 
+Os rasters binários de áreas de nicho foram convertidos eme shapefiles e então calculadas suas áreas geodésicas, usando o pacote sf [@Pebesma2026]. Foi calculado a área de nicho para cada um dos 16 cenários. Os cenários passado e os cenários futuros em comparação com o cenário presente. 
+
+Todas as análises foram feitas usando a linguagem de programação R. v.4.6 [@RCoreTeam2025].
+
 # Referências
 
 :::{#refs}
