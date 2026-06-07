@@ -140,7 +140,7 @@ tabela_flex <- area_df |>
                sep = " ",
                1:2) |>
   dplyr::mutate(`Cenário-Tempo` = `Cenário-Tempo` |>
-                  stringr::str_remove("NA")) |>
+                  stringr::str_remove(" NA")) |>
   flextable::flextable() |>
   flextable::align(align = "center", part = "all") |>
   flextable::width(width = 1.25)
@@ -156,5 +156,5 @@ area_df |>
                sep = " ",
                1:2) |>
   dplyr::mutate(`Cenário-Tempo` = `Cenário-Tempo` |>
-                  stringr::str_replace(" NA", "")) |>
+                  stringr::str_remove(" NA")) |>
   writexl::write_xlsx("tabela_valores_area_nicho.xlsx")
