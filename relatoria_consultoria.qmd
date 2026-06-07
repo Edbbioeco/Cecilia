@@ -25,6 +25,9 @@ Todas as variáveis bioclimáticas foram posteriormente recortadas para um shape
 
 ## Análise de dados
 
-# Recomendações
-
 # Referências
+
+:::{#refs}
+:::
+
+# Recomendações
