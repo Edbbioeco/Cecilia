@@ -28,27 +28,63 @@ Todas as variáveis bioclimáticas foram posteriormente recortadas para um shape
 
 ### Multicolinearidade
 
-Antes de construir os modelos, foi feita uma análise de multicolinearidade entre as variáveis bioclim,áticas do cenário presente, usando o índice de Spearman para r > |0.7| como critério de multicolinearidade (Figura 1). Foram selecionadas as variáveis Bio04, bio07, Bio11, Bio16, Bio18 e Bio19.
+Antes de construir os modelos, foi feita uma análise de multicolinearidade entre as variáveis bioclim,áticas do cenário presente, usando o índice de Spearman para r \> \|0.7\| como critério de multicolinearidade (Figura 1). Foram selecionadas as variáveis Bio04, bio07, Bio11, Bio16, Bio18 e Bio19.
 
 ### Criação dos modelos
 
-Foi criado um modelo usando os dados do cenário presente. O modelo foi contruído usando 1000 pontyos de background, 30% de dados para treino e 5 repetições. Foram usados os algorítimos de presença-ausência GAM e GLM [@Guisan2002] e presença-backaground MaxEnt [@Phillips2006] e MaxNet [@Renner2013]. Foram escolhidos algorítimos de presença-ausência para estiver efeitos de possíveis barreias biogeográficas [@Liu2011] e algoritimos de presença-background para evitar subestimar o potencial de distribuição da espécie [@LI2013]. Os modelos foram criados usando o pacote sdm [@Naimi2016], seguindo o protocolo seguido por @Zurell2020. Para maximizar as criação do melhor modelo possível, foram gerados múltiplos modelos através do pacote de linguagem R purrr [@Wickham2026], e escolhido o modelo com os maiores valores de AUC [@Manel2001] e TSS [@Allouche2006], avaliado pelo pacote de linguagem R sdm. A partir do modelo criado, foram criados as predições para os cenários passado, presente e os cenários futuros, através do pacote de linguagem R terra, e os ensembles e as predições binárias de área de nicho para todos os cenários, usando o pacote sdm. 
+Foi criado um modelo usando os dados do cenário presente. O modelo foi contruído usando 1000 pontyos de background, 30% de dados para treino e 5 repetições. Foram usados os algorítimos de presença-ausência GAM e GLM [@Guisan2002] e presença-backaground MaxEnt [@Phillips2006] e MaxNet [@Renner2013]. Foram escolhidos algorítimos de presença-ausência para estiver efeitos de possíveis barreias biogeográficas [@Liu2011] e algoritimos de presença-background para evitar subestimar o potencial de distribuição da espécie [@LI2013]. Os modelos foram criados usando o pacote sdm [@Naimi2016], seguindo o protocolo seguido por @Zurell2020. Para maximizar as criação do melhor modelo possível, foram gerados múltiplos modelos através do pacote de linguagem R purrr [@Wickham2026], e escolhido o modelo com os maiores valores de AUC [@Manel2001] e TSS [@Allouche2006], avaliado pelo pacote de linguagem R sdm. A partir do modelo criado, foram criados as predições para os cenários passado, presente e os cenários futuros, através do pacote de linguagem R terra, e os ensembles e as predições binárias de área de nicho para todos os cenários, usando o pacote sdm.
 
 ### Avaliação dos modelos
 
 O modelo foi avaliação quanto ao seu AUC e TSS. Pada algorítimo e suas repetições foi avaliado quanto à curva ROC [@Manel2001]. Cada variável foi avaliada quanto à sua importância para o modelo e a sua curva de resposta em funçãodo modelo, utilizando o critério de Jackknife [@Shcheglovitova2013]. Todas estas análises foram feitas utilizando o pacote sdm.
 
-Os rasters binários de áreas de nicho foram convertidos eme shapefiles e então calculadas suas áreas geodésicas, usando o pacote sf [@Pebesma2026]. Foi calculado a área de nicho para cada um dos 16 cenários. Os cenários passado e os cenários futuros em comparação com o cenário presente. 
+Os rasters binários de áreas de nicho foram convertidos eme shapefiles e então calculadas suas áreas geodésicas, usando o pacote sf [@Pebesma2026]. Foi calculado a área de nicho para cada um dos 16 cenários. Os cenários passado e os cenários futuros em comparação com o cenário presente.
 
 Todas as análises foram feitas usando a linguagem de programação R. v.4.6 [@RCoreTeam2025].
 
 # Referências
 
-:::{#refs}
+::: {#refs}
 :::
 
 # Recomendações
 
+Cecília, aqui não acho que caberia eu escrever os resultados. Falo isso porque eu não conheço a biologia da sua espécie, e acho que seria mais adequado você analisar os resultados e escreve-los também de acordo com a bioologia, evolução e ecologia da espécie. Segue algumas considerações.
+
 # Figuras
 
-![Figura 1. Multicolinearidade entre as variáveis bioclimáticas, usando o índice de Spearman para r > |0.7| como critério.](multicolinearidade.png){fig-align="center"}
+![Figura 1. Multicolinearidade entre as variáveis bioclimáticas, usando o índice de Spearman para r \> \|0.7\| como critério.](multicolinearidade.png){fig-align="center"}
+
+![Figura 2. Mapa da distribuição da probabilidade de ocorrência de *Cenostigma pyramidale* ao longo da Caatinga. As áreas mais próximas do roxo escuro representam menor probabilidade de ocorrência. As áreas mais próximas do amarelo representam meaior probabilidade de ocorrência.](mapa_probabilidade_ocorrencia_presente.png)
+
+![Figura 3. Mapa da distribuição da probabilidade de ocorrência de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático passado de 21 mil anos atrás. As áreas mais próximas do amarelo representam meaior probabilidade de ocorrência.](mapa_probabilidade_ocorrencia_passado.png)
+
+![Figura 3. Mapa da distribuição da probabilidade de ocorrência de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro otimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas mais próximas do amarelo representam meaior probabilidade de ocorrência.](mapa_probabilidade_ocorrencia_futuro_cenario126.png)
+
+![Figura 4. Mapa da distribuição da probabilidade de ocorrência de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro menos otimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas mais próximas do amarelo representam meaior probabilidade de ocorrência.](mapa_probabilidade_ocorrencia_futuro_cenario245.png)
+
+![Figura 5. Mapa da distribuição da probabilidade de ocorrência de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro pessimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas mais próximas do amarelo representam meaior probabilidade de ocorrência.](mapa_probabilidade_ocorrencia_futuro_cenario370.png)
+
+![Figura 6. Mapa da distribuição da probabilidade de ocorrência de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro mais pessimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas mais próximas do amarelo representam meaior probabilidade de ocorrência.](mapa_probabilidade_ocorrencia_futuro_cenario585.png)
+
+
+![Figura 7. Curva ROc do modelo, para cada um dos algorítimos. Cada linha preta é uma das repetições de cada algorítimo. A linha azul é o modelo nulo.](curva_roc.png)
+
+
+![Figura 8. Importancia das variáveis bioclimáticas para para o modelo, usando o critério de AUC e o critério de correlação. Os pontos representam os valores médios de cada repetição, e as barras de erro os desvios padrões.](importancia_variaveis.png)
+
+![Figura 9. Curva de resposta das variáveis em função do modelo. As linhas pretas são as médias. A nuvem cinza é a variáção das reptição do modelo.](curva_resposta.png)
+
+![Figura 10. Mapa da distribuição da área de nicho de *Cenostigma pyramidale* ao longo da Caatinga. As áreas em amarelo representam o nicho, e as áreas em roxo escuro representam a área fora do nicho.](mapa_area_nicho_presente.png)
+
+![Figura 11. Mapa da distribuição da área de nicho de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático passado de 21 mil anos atrás. As áreas em amarelo representam o nicho, e as áreas em roxo escuro representam a área fora do nicho.](mapa_area_nicho_passado.png)
+
+![Figura 12. Mapa da distribuição da área de nicho de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro otimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas em amarelo representam o nicho, e as áreas em roxo escuro representam a área fora do nicho.](mapa_area_nicho_futuro_cenario126.png)
+
+![Figura 13. Mapa da distribuição da área de nicho de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro menos otimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas em amarelo representam o nicho, e as áreas em roxo escuro representam a área fora do nicho.](mapa_area_nicho_futuro_cenario245.png)
+
+![Figura 14. Mapa da distribuição da área de nicho de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro pessimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas em amarelo representam o nicho, e as áreas em roxo escuro representam a área fora do nicho.](mapa_area_nicho_futuro_cenario370.png)
+
+![Figura 15. Mapa da distribuição da área de nicho de *Cenostigma pyramidale* ao longo da Caatinga, para um cenário climático futuro mais pessimista, para os períodos de 2021-2040, 2041-2060, 2061-2080, 2081-2100. As áreas em amarelo representam o nicho, e as áreas em roxo escuro representam a área fora do nicho.](mapa_area_nicho_futuro_cenario585.png)
+
+![Figura 16. Comparação das áreas de nicho para cada um dos cenários. As linhas e pontos entre o roxo escuro ao amarelo representam os cenários futuros. A linha vermelha representa o cenário presente. A linha azul representa o cenário passado.](areas_nichos_comparacao.png)
