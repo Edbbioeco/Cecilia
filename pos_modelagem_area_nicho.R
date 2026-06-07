@@ -12,6 +12,8 @@ library(ggview)
 
 library(flextable)
 
+library(writexl)
+
 # Dados ----
 
 ## Shapefile da caatinga ----
