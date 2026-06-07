@@ -150,3 +150,11 @@ tabela_flex
 ### Salvar tabela ----
 
 tabela_flex |> flextable::save_as_docx(path = "tabela_valores_area_nicho.docx")
+
+area_df |>
+  tidyr::unite(col = "Cenário-Tempo",
+               sep = " ",
+               1:2) |>
+  dplyr::mutate(`Cenário-Tempo` = `Cenário-Tempo` |>
+                  stringr::str_replace(" NA", "")) |>
+  writexl::write_xlsx("tabela_valores_area_nicho.xlsx")
