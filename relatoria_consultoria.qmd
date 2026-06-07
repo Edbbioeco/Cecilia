@@ -93,7 +93,9 @@ Cecília, aqui não acho que caberia eu escrever os resultados. Falo isso porque
 Tabela 1. Valores em km² das áreas de nicho de cada um dos 18 cenários climáticos. 
 :::
 
-```{r, warning=FALSE}
+```{r}
+#| echo: false
+
 library(readxl)
 
 library(flextable)
