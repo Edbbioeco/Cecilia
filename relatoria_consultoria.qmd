@@ -26,7 +26,11 @@ Todas as variáveis bioclimáticas foram posteriormente recortadas para um shape
 
 ## Análise de dados
 
+### Multicolinearidade
+
 Antes de construir os modelos, foi feita uma análise de multicolinearidade entre as variáveis bioclim,áticas do cenário presente, usando o índice de Spearman para r > |0.7| como critério de multicolinearidade (Figura 1). Foram selecionadas as variáveis Bio04, bio07, Bio11, Bio16, Bio18 e Bio19.
+
+### Criação dos modelos
 
 Foi criado um modelo usando os dados do cenário presente. O modelo foi contruído usando 1000 pontyos de background, 30% de dados para treino e 5 repetições. Foram usados os algorítimos de presença-ausência GAM e GLM [@Guisan2002] e presença-backaground MaxEnt [@Phillips2006] e MaxNet [@Renner2013]. Foram escolhidos algorítimos de presença-ausência para estiver efeitos de possíveis barreias biogeográficas [@Liu2011] e algoritimos de presença-background para evitar subestimar o potencial de distribuição da espécie [@LI2013]. Os modelos foram criados usando o pacote sdm [@Naimi2016], seguindo o protocolo seguido por @Zurell2020. Para maximizar as criação do melhor modelo possível, foram gerados múltiplos modelos através do pacote de linguagem R purrr [@Wickham2026], e escolhido o modelo com os maiores valores de AUC [@Manel2001] e TSS [@Allouche2006], avaliado pelo pacote de linguagem R sdm. A partir do modelo criado, foram criados as predições para os cenários passado, presente e os cenários futuros, através do pacote de linguagem R terra, e os ensembles e as predições binárias de área de nicho para todos os cenários, usando o pacote sdm. 
 
