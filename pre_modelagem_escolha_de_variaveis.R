@@ -95,9 +95,10 @@ multicol |>
                 value = value |> round(2)) |>
   dplyr::filter(igual == "Não") |>
   dplyr::select(Var1, Var2, `Índice de Correlação` = value) |>
-  ggplot(aes(Var1, Var2, fill = `Índice de Correlação`, label = `Índice de Correlação`)) +
-  geom_tile(color = "black") +
-  geom_text() +
+  ggplot(aes(Var1, Var2, fill = `Índice de Correlação`,
+             label = `Índice de Correlação`)) +
+  geom_tile(color = "black", linewidth = 1) +
+  geom_text(color = "black", fontface = "bold", size = 4.85) +
   coord_equal() +
   labs(x = NULL,
        y = NULL) +
