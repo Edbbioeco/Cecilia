@@ -7,6 +7,7 @@ bibliography: C:/Users/LENOVO/OneDrive/Documentos/bib/export.bib
 format: 
   docx:
     reference-doc: modelo_referencia.docx
+    fig-align: center
 editor: visual
 execute: 
   echo: false
@@ -25,7 +26,7 @@ Todas as variáveis bioclimáticas foram posteriormente recortadas para um shape
 
 ## Análise de dados
 
-Antes de construir os modelos, foi feita uma análise de multicolinearidade entre as variáveis, usando o índice de Spearman para r > |0.7| como critério de multicolinearidade (Figura 1).
+Antes de construir os modelos, foi feita uma análise de multicolinearidade entre as variáveis bioclim,áticas do cenário presente, usando o índice de Spearman para r > |0.7| como critério de multicolinearidade (Figura 1).
 
 # Referências
 
@@ -33,3 +34,7 @@ Antes de construir os modelos, foi feita uma análise de multicolinearidade entr
 :::
 
 # Recomendações
+
+# Figuras
+
+![Figura 1. Multicolinearidade entre as variáveis bioclimáticas, usando o índice de Spearman para r > |0.7| como critério.](multicolinearidade.png){fig-align="center"}
