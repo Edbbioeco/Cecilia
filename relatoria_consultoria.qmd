@@ -25,6 +25,8 @@ Todas as variáveis bioclimáticas foram posteriormente recortadas para um shape
 
 ## Análise de dados
 
+Antes de construir os modelos, foi feita uma análise de multicolinearidade entre as variáveis, usando o índice de Spearman para r > |0.7| como critério de multicolinearidade (Figura 1).
+
 # Referências
 
 :::{#refs}
