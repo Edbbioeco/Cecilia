@@ -675,8 +675,9 @@ ggplot() +
   coord_sf(xlim = c(-45.07807, -35.06698),
            ylim = c(-16.71256, -2.748381)) +
   facet_wrap(~lyr) +
+  scale_x_continuous(breaks = seq(-44, -36, 4)) +
   theme_bw() +
-  theme(axis.text = element_text(size = 20, color = "black"),
+  theme(axis.text = element_text(size = 15, color = "black"),
         legend.text = element_text(size = 20, color = "black"),
         legend.title = element_text(size = 20, color = "black"),
         legend.position = "bottom",
